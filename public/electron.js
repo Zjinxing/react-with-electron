@@ -11,8 +11,11 @@ const URL = process.env.NODE_ENV === 'dev' ? 'http://localhost:3000' : `file://$
 
 function createWindow() {
   win = new BrowserWindow({
-    width: 960,
-    height: 680,
+    width: 1008,
+    minWidth: 1008,
+    height: 695,
+    minHeight: 695,
+    titleBarStyle: 'hidden'
   })
   win.loadURL(URL)
   win.webContents.openDevTools()
