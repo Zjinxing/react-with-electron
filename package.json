@@ -38,7 +38,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "dev": "export NODE_ENV=dev && concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\""
+    "dev": "export NODE_ENV=dev && concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
+    "build:electron": "export NODE_ENV=prod && yarn build && electron-builder && rm -rf build"
   },
   "eslintConfig": {
     "extends": "react-app"
