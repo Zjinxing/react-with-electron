@@ -2,9 +2,43 @@
   width: 200px;
   height: 100%;
   outline: 1px dashed #f00;
+  padding: 0 0 0 15px;
+
+  .avatar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 0 10px 0;
+    margin: 0 30px 20px 0;
+
+    span {
+      font-size: 13px;
+      padding: 5px 0 0;
+
+      &:last-child {
+        font-size: 11px;
+      }
+    }
+  }
 
   ul {
     list-style: none;
-    padding: 0;
+    padding: 0 0 0 5px;
+    text-align: left;
+    font-size: 12px;
+    margin-bottom: 25px;
+
+    li {
+      font-size: 13.5px;
+      padding: 5px;
+
+      &:first-child {
+        margin-top: 5px;
+      }
+    }
+
+    .iconfont {
+      margin-right: 5px;
+    }
   }
 }
