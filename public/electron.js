@@ -15,7 +15,10 @@ function createWindow() {
     minWidth: 1008,
     height: 695,
     minHeight: 695,
-    titleBarStyle: 'hidden'
+    titleBarStyle: 'hidden',
+    webPreferences: {
+      nodeIntegration: true
+    },
   })
   win.loadURL(URL)
   win.webContents.openDevTools()

@@ -38,10 +38,10 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "build": "rescripts build",
+    "test": "rescripts test",
     "eject": "react-scripts eject",
-    "dev": "export NODE_ENV=dev && concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
+    "dev": "export NODE_ENV=dev && concurrently \"BROWSER=none rescripts start\" \"wait-on http://localhost:3000 && electron .\"",
     "build:electron": "export NODE_ENV=prod && yarn build && electron-builder && rm -rf build"
   },
   "eslintConfig": {
