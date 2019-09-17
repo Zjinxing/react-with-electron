@@ -1,17 +1,27 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './index.scss';
 
 const Sider: React.FC = () => {
   return (
     <div className="sider">
-      <div className="avatar">头像及登录</div>
+      <div className="avatar">
+        <img
+          src={require('../../../resources/default_user.png')}
+          width="50"
+          alt=""
+        />
+        <span>登录QQ音乐</span>
+        <span>让生活充满音乐</span>
+      </div>
       <ul>
         音乐馆
         <li>
-          <Link to="/choiceness">精选</Link>
+          <i className="iconfont icon-choiceness"></i>
+          <Link to="/">精选</Link>
         </li>
         <li>
+          <i className="iconfont icon-rank"></i>
           <Link to="/ranking">排行</Link>
         </li>
         <li>

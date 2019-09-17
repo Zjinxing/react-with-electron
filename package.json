@@ -28,6 +28,8 @@
     "@types/node": "12.7.5",
     "@types/react": "16.9.2",
     "@types/react-dom": "16.9.0",
+    "mobx": "^5.13.0",
+    "mobx-react-lite": "^1.4.1",
     "node-sass": "^4.12.0",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
@@ -37,11 +39,11 @@
     "typescript": "3.6.3"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "rescripts start",
     "build": "rescripts build",
     "test": "rescripts test",
     "eject": "react-scripts eject",
-    "dev": "export NODE_ENV=dev && concurrently \"BROWSER=none rescripts start\" \"wait-on http://localhost:3000 && electron .\"",
+    "dev": "export NODE_ENV=dev && concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
     "build:electron": "export NODE_ENV=prod && yarn build && electron-builder && rm -rf build"
   },
   "eslintConfig": {

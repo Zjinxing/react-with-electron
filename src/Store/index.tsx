@@ -4,6 +4,13 @@ const { systemPreferences } = remote;
 
 export const AppContext = createContext({});
 
+export interface State {
+  isDarkMode: boolean;
+  setData: (name: string, data: any) => void;
+  addState: () => void;
+  [propName: string]: any;
+}
+
 export default ({ children }: any) => {
   const setData = (name: string, data: any) => {
     setState(prevState => {

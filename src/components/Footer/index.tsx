@@ -1,7 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { AppContext, State } from '../../Store/index';
 import './index.scss';
 const Footer: React.FC = () => {
-  return <div className="footer">And this is footer</div>;
+  const { isDarkMode } = useContext(AppContext) as State;
+
+  return (
+    <div className={`footer ${isDarkMode ? 'dark' : ''}`}>
+      And this is footer
+    </div>
+  );
 };
 
 export default Footer;

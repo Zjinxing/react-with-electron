@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Sider from './Sider';
 import Ranking from './Ranking';
 import Choiceness from './Choiceness';
@@ -17,7 +17,7 @@ const Container: React.FC = () => {
     <div className="container">
       <Router>
         <Sider />
-        <Route path="/choiceness" component={Choiceness}></Route>
+        <Route exact path="/" component={Choiceness}></Route>
         <Route path="/ranking" component={Ranking}></Route>
         <Route path="/songList" component={SongList}></Route>
         <Route path="/radio" component={Radio}></Route>
