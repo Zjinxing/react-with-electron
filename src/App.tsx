@@ -1,4 +1,4 @@
-import React, { useContext, useState, useReducer, useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { remote } from 'electron'
 import './App.scss'
 import Header from './components/Header'
