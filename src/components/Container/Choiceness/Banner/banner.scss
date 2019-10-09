@@ -1,0 +1,67 @@
+.banner-wrapper {
+  position: relative;
+  width: 100%;
+  height: calc((100vw - 215px) * 0.3);
+  max-height: 355px;
+  border: 1px dashed rgb(255, 255, 255);
+  box-sizing: border-box;
+  overflow: hidden;
+  ul {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    li {
+      position: absolute;
+      display: inline-block;
+      width: calc((100vw - 215px) * 0.5);
+      max-width: 545px;
+      height: calc((100vw - 215px) * 0.5 * 0.4);
+      max-height: 218px;
+      writing-mode: horizontal-tb;
+      transition: all 0.5s;
+      box-sizing: border-box;
+    }
+    li.prev {
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 10;
+    }
+    li.current {
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%) scale(1.3);
+      z-index: 20;
+    }
+    li.back {
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 10;
+    }
+    li.next {
+      left: 100%;
+      top: 50%;
+      transform: translate(-100%, -50%);
+      z-index: 10;
+    }
+  }
+  .control {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-top: 5px solid #fff;
+    border-left: 5px solid #fff;
+    z-index: 100;
+  }
+  .control.left {
+    top: 50%;
+    left: 20px;
+    transform: rotate(-45deg);
+  }
+  .control.right {
+    top: 50%;
+    right: 20px;
+    transform: rotate(135deg);
+  }
+}

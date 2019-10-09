@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 import { remote } from 'electron'
+import { GET_RECOMMEND } from 'request/Recommend'
 import './App.scss'
 import Header from './components/Header'
 import Footer from './components/Footer'
@@ -12,14 +13,18 @@ const AppContainer: React.FC = () => {
   let isDarkMode: boolean = systemPreferences.isDarkMode()
   const { setData } = useContext(AppContext) as State
   useEffect(() => {
-    systemPreferences.subscribeNotification(
-      'AppleInterfaceThemeChangedNotification',
-      function theThemeHasChanged() {
-        console.log('isDarkMode', systemPreferences.isDarkMode())
-        setData('isDarkMode', systemPreferences.isDarkMode())
-        isDarkMode = systemPreferences.isDarkMode()
-      }
-    )
+    ;(async () => {
+      systemPreferences.subscribeNotification(
+        'AppleInterfaceThemeChangedNotification',
+        function theThemeHasChanged() {
+          console.log('isDarkMode', systemPreferences.isDarkMode())
+          setData('isDarkMode', systemPreferences.isDarkMode())
+          isDarkMode = systemPreferences.isDarkMode()
+        }
+      )
+      const recommend = await GET_RECOMMEND()
+      setData('recommend', recommend)
+    })()
   }, [])
   return (
     <div className={`App ${isDarkMode ? 'dark' : ''}`}>

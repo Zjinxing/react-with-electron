@@ -7,7 +7,7 @@ const Sider: React.FC = () => {
   const { isDarkMode } = useContext(AppContext) as State
 
   return (
-    <div className="sider">
+    <>
       <div className="avatar">
         <img src={require('resources/default_user.png')} width="50" alt="" />
         <span>登录QQ音乐</span>
@@ -109,7 +109,7 @@ const Sider: React.FC = () => {
           </NavLink>
         </li>
       </ul>
-    </div>
+    </>
   )
 }
 
