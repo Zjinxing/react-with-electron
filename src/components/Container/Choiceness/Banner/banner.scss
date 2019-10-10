@@ -3,7 +3,6 @@
   width: 100%;
   height: calc((100vw - 215px) * 0.3);
   max-height: 355px;
-  border: 1px dashed rgb(255, 255, 255);
   box-sizing: border-box;
   overflow: hidden;
   ul {
@@ -63,5 +62,25 @@
     top: 50%;
     right: 20px;
     transform: rotate(135deg);
+  }
+  .dot-wrapper {
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 15px;
+    z-index: 100;
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(200, 200, 200, 0.5);
+    }
+    .active {
+      background: #fff;
+    }
   }
 }

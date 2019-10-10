@@ -13,12 +13,25 @@ const Banner: React.FC<Props> = props => {
   const [next, setNext] = useState(classNames[1])
   const [back, setBack] = useState(classNames[2])
   const [current, setCurrent] = useState(classNames[3])
+  const [currentIndex, setCurrentIndex] = useState(0)
 
   const { focusContent } = props
   let prevUrl = focusContent ? focusContent[focusContent.length - 1].pic_info.url : ''
   let nextUrl = focusContent ? focusContent[1].pic_info.url : ''
   let backUrl = focusContent ? focusContent[2].pic_info.url : ''
   let currentUrl = focusContent ? focusContent[0].pic_info.url : ''
+
+  const getCurrentIndex = () => {
+    setTimeout(() => {
+      const currentImg = document.querySelector('.current img') as HTMLImageElement
+      const { src } = currentImg
+      const currentIndex = focusContent
+        ? focusContent.findIndex(item => item.pic_info.url === src)
+        : 0
+      setCurrentIndex(currentIndex)
+    }, 0)
+  }
+
   const moveLeft = () => {
     const prevImg = document.querySelector('.prev img') as HTMLImageElement
     const backImg = document.querySelector('.back img') as HTMLImageElement
@@ -56,6 +69,7 @@ const Banner: React.FC<Props> = props => {
       default:
         break
     }
+    getCurrentIndex()
   }
   const moveRight = () => {
     const backImg = document.querySelector('.back img') as HTMLImageElement
@@ -94,7 +108,15 @@ const Banner: React.FC<Props> = props => {
       default:
         break
     }
+    getCurrentIndex()
   }
+  const dotPosition = focusContent
+    ? focusContent.map((item, index) => {
+        const currentImg = document.querySelector('.current img') as HTMLImageElement
+        const active = index === currentIndex ? 'active' : ''
+        return <span key={index} className={`dot ${active}`}></span>
+      })
+    : null
 
   return (
     <div className="banner-wrapper">
@@ -114,6 +136,7 @@ const Banner: React.FC<Props> = props => {
       </ul>
       <span onClick={moveLeft} className="control left"></span>
       <span onClick={moveRight} className="control right"></span>
+      <div className="dot-wrapper">{dotPosition}</div>
     </div>
   )
 }
