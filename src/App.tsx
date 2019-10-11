@@ -9,17 +9,18 @@ import ContextProvider, { AppContext, State } from './Store'
 
 const { systemPreferences } = remote
 
+const sysDarkMode = () =>
+  systemPreferences.getUserDefault('AppleInterfaceStyle', 'string') === 'Dark'
+
 const AppContainer: React.FC = () => {
-  let isDarkMode: boolean = systemPreferences.isDarkMode()
-  const { setData } = useContext(AppContext) as State
+  const { setData, isDarkMode } = useContext(AppContext) as State
   useEffect(() => {
     ;(async () => {
       systemPreferences.subscribeNotification(
         'AppleInterfaceThemeChangedNotification',
         function theThemeHasChanged() {
-          console.log('isDarkMode', systemPreferences.isDarkMode())
-          setData('isDarkMode', systemPreferences.isDarkMode())
-          isDarkMode = systemPreferences.isDarkMode()
+          setData('isDarkMode', sysDarkMode())
+          // isDarkMode = systemPreferences.isDarkMode()
         }
       )
       const recommend = await GET_RECOMMEND()

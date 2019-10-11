@@ -5,6 +5,9 @@ const { systemPreferences } = remote
 
 export const AppContext = createContext({})
 
+const isDarkMode = () =>
+  systemPreferences.getUserDefault('AppleInterfaceStyle', 'string') === 'Dark'
+
 export interface State {
   isDarkMode: boolean
   recommend: Recommend
@@ -31,11 +34,12 @@ export default ({ children }: any) => {
     })
   }
   const initAppState = {
-    isDarkMode: systemPreferences.isDarkMode(),
+    isDarkMode: isDarkMode(),
     recommend: {},
     setData,
     addState
   }
+  console.log(isDarkMode())
   const [state, setState] = useState(initAppState)
   return <AppContext.Provider value={state}>{children}</AppContext.Provider>
 }
