@@ -112,7 +112,6 @@ const Banner: React.FC<Props> = props => {
   }
   const dotPosition = focusContent
     ? focusContent.map((item, index) => {
-        const currentImg = document.querySelector('.current img') as HTMLImageElement
         const active = index === currentIndex ? 'active' : ''
         return <span key={index} className={`dot ${active}`}></span>
       })
