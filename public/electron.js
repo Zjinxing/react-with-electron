@@ -17,6 +17,7 @@ function createWindow() {
     minHeight: 695,
     titleBarStyle: 'hidden',
     webPreferences: {
+      webSecurity: false,
       nodeIntegration: true
     }
   })
