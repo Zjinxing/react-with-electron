@@ -1,4 +1,4 @@
-interface PlaylistItem {
+export interface PlaylistItem {
   access_num: number
   album_pic_mid: string
   censor_remark: Array<any>

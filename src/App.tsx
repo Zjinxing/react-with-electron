@@ -26,7 +26,7 @@ const AppContainer: React.FC = () => {
       const recommend = await GET_RECOMMEND()
       setData('recommend', recommend)
     })()
-  }, [])
+  }, [setData])
   return (
     <div className={`App ${isDarkMode ? 'dark' : ''}`}>
       <Header />
