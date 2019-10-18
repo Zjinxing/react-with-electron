@@ -1,0 +1,21 @@
+.official-songlist {
+  width: 100%;
+  // border: 1px solid #fff;
+  margin-top: 15px;
+  box-sizing: border-box;
+  .title {
+    margin-left: 15px;
+    text-align: left;
+  }
+  .cover-list {
+    top: 36px;
+    display: flex;
+    li {
+      @media (max-width: 1610px) {
+        &:last-child {
+          display: none;
+        }
+      }
+    }
+  }
+}
