@@ -111,7 +111,7 @@ const Banner: React.FC<Props> = props => {
     getCurrentIndex()
   }
   const dotPosition = focusContent
-    ? focusContent.map((item, index) => {
+    ? focusContent.slice(0, 5).map((item, index) => {
         const active = index === currentIndex ? 'active' : ''
         return <span key={index} className={`dot ${active}`}></span>
       })
