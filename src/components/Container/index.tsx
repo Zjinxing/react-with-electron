@@ -4,6 +4,7 @@ import Sider from './Sider'
 import Ranking from './Ranking'
 import Choiceness from './Choiceness'
 import SongList from './SongList'
+import SonglistDetail from './SonglistDetail'
 import Radio from './Radio'
 import MV from './MV'
 import Favor from './Favor'
@@ -34,6 +35,7 @@ const Container: React.FC = () => {
             <Route path="/local" component={Local}></Route>
             <Route path="/download" component={Download}></Route>
             <Route path="/history" component={History}></Route>
+            <Route path="/songlist-detail" component={SonglistDetail} />
             <Route component={Choiceness}></Route>
           </Switch>
         </div>
