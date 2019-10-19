@@ -1,4 +1,3 @@
-import { remote } from 'electron'
 import React, { useEffect, useState, ReactNode } from 'react'
 import { GET_SONGLIST } from 'request/GetSongList'
 import { Playlist } from 'request/types/Playlist'
