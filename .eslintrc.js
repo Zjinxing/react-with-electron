@@ -8,5 +8,8 @@ module.exports = {
         html: true
       }
     ]
+  },
+  parserOptions: {
+    ecmaVersion: 6
   }
 }
