@@ -1,35 +1,46 @@
 .songlist-detail {
   &-content {
     padding: 0 25px 0 5px;
-    .ant-table .ant-table-body .ant-table-thead th {
-      background: #393939;
-      color: #888;
-      border-bottom: 1px solid #393939;
-      padding: 10px;
-      font-size: 12px;
-    }
-    .table-row {
-      color: #fff;
-      td {
-        border-bottom: 1px solid #393939;
-        padding: 10px;
-      }
-      td.album-col,
-      td.singer-col,
-      td.name-col {
-        span {
-          overflow: hidden;
-          text-overflow: ellipsis;
-          display: -webkit-box;
-          -webkit-line-clamp: 1;
-          -webkit-box-orient: vertical;
-        }
-      }
-      &:hover {
-        td {
-          background: #303030 !important;
-        }
-      }
-    }
+    // .ant-table .ant-table-body .ant-table-thead th {
+    //   background: #393939;
+    //   color: #888;
+    //   border-bottom: 1px solid #393939;
+    //   padding: 10px;
+    //   font-size: 12px;
+    // }
+    // .table-row {
+    //   color: #fff;
+    //   td {
+    //     border-bottom: 1px solid #393939;
+    //     padding: 10px;
+    //   }
+    //   td.name-col,
+    //   td.album-col,
+    //   td.singer-col {
+    //     span {
+    //       overflow: hidden;
+    //       text-overflow: ellipsis;
+    //       display: -webkit-box;
+    //       -webkit-line-clamp: 1;
+    //       -webkit-box-orient: vertical;
+    //     }
+    //   }
+    //   .name-content {
+    //     display: flex;
+    //     .tags {
+    //       .tag {
+    //         margin-left: 5px;
+    //       }
+    //       .mv:hover {
+    //         cursor: pointer;
+    //       }
+    //     }
+    //   }
+    //   &:hover {
+    //     td {
+    //       background: #303030 !important;
+    //     }
+    //   }
+    // }
   }
 }
