@@ -1,5 +1,5 @@
 import React, { useEffect, useState, ReactNode } from 'react'
-import { GET_SONGLIST } from 'request/GetSongList'
+import { GET_OFFICIAL_SONGLIST } from 'request/GetSongList'
 import { Playlist } from 'request/types/Playlist'
 import PlaylistCover from 'components/common/PlaylistCover/index'
 import './index.scss'
@@ -9,7 +9,7 @@ const OfficialSonglist: React.FC = () => {
   let coverList: ReactNode
   useEffect(() => {
     ;(async () => {
-      const songlist = await GET_SONGLIST()
+      const songlist = await GET_OFFICIAL_SONGLIST()
       setOfficialSonglist(songlist)
     })()
   }, [])
