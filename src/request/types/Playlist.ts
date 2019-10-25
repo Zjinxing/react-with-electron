@@ -56,6 +56,14 @@ export interface Singer {
   title: string
 }
 
+export interface Album {
+  id: number
+  mid: string
+  name: string
+  title: string
+  subtitle: string
+}
+
 export interface SongDetail {
   id: number
   type: number
@@ -75,13 +83,7 @@ export interface SongDetail {
   url: string
   time_public: string
   singer: Singer[]
-  album: {
-    id: number
-    mid: string
-    name: string
-    title: string
-    subtitle: string
-  }
+  album: Album
   mv: {
     id: number
     vid: string
