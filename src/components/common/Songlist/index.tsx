@@ -19,6 +19,91 @@ const SonglistTable: React.FC<Props> = props => {
     <img src={require('resources/cell_only.png')} className="tag" width="26" alt="独家" />
   )
 
+  const CellPlay = (
+    <span className="cell-play">
+      <img
+        src={require('resources/cellPlay_hl@2x.png')}
+        className="cell-play--normal"
+        width="20"
+        alt="play"
+      />
+      <img
+        src={require('resources/cellPlay_hover@2x.png')}
+        className="cell-play--hover"
+        width="20"
+        alt="play"
+      />
+    </span>
+  )
+
+  const CellLove = (
+    <span className="cell-love">
+      <img
+        src={require('resources/cellLoveUnselected_hl@2x.png')}
+        className="cell-love--normal"
+        width="20"
+        alt="love"
+      />
+      <img
+        src={require('resources/cellLoveUnselected_hover@2x.png')}
+        className="cell-love--hover"
+        width="20"
+        alt="love"
+      />
+      {/* <img
+        src={require('resources/cellLove_selected@2x.png')}
+        className="cell-love--selected"
+        width="20"
+        alt="love"
+      /> */}
+    </span>
+  )
+
+  const CellDownload = (
+    <span className="cell-download">
+      <img
+        src={require('resources/cellDownload_hl@2x.png')}
+        className="cell-download--normal"
+        width="20"
+        alt=""
+      />
+      <img
+        src={require('resources/cellDownload_hover@2x.png')}
+        className="cell-download--hover"
+        width="20"
+        alt=""
+      />
+      {/* <img
+        src={require('resources/cellDownloadOK_hl@2x.png')}
+        className="cell-downloadok"
+        width="20"
+        alt=""
+      />
+      <img
+        src={require('resources/cellDownloadOK_hover@2x.png')}
+        className="cell-downloadok--hover"
+        width="20"
+        alt=""
+      /> */}
+    </span>
+  )
+  const Menu = (
+    <span className="cell-menu">
+      <img
+        src={require('resources/normalMenu.png')}
+        className="cell-menu--normal"
+        width="16"
+        alt="menu"
+      />
+      <img
+        src={require('resources/normalMenu_hover.png')}
+        className="cell-menu--hover"
+        width="16"
+        alt="menu"
+      />
+    </span>
+  )
+
   const columns: ColumnProps<SongDetail>[] = [
     {
       title: '歌曲',
@@ -28,15 +113,20 @@ const SonglistTable: React.FC<Props> = props => {
       className: 'name-col',
       render: (cell: string, data) => (
         <div className="name-content">
-          <span className="song-name">{cell}</span>
-          <div className="tags">
-            <span>
+          <span className="text">{cell}</span>
+          <div className="cells">
+            <span className="tags">
               {data.file.size_ape || data.file.size_flac ? sqTag : null}
               {data.isonly ? onlyTag : null}
               {/* TODO, mv 点击打开新窗口 */}
               {data.mv.vid ? mvTag : null}
             </span>
-            <span className="controls"></span>
+            <span className="controls">
+              {CellPlay}
+              {CellLove}
+              {CellDownload}
+              {Menu}
+            </span>
           </div>
         </div>
       )
@@ -47,7 +137,9 @@ const SonglistTable: React.FC<Props> = props => {
       className: 'singer-col',
       dataIndex: 'singer',
       width: '25%',
-      render: (cell: Singer[]) => <span>{cell.map(singer => singer.name).join('/')}</span>
+      render: (cell: Singer[]) => (
+        <span className="text">{cell.map(singer => singer.name).join('/')}</span>
+      )
     },
     {
       title: '专辑',
@@ -55,7 +147,7 @@ const SonglistTable: React.FC<Props> = props => {
       className: 'album-col',
       dataIndex: 'album',
       width: '25%',
-      render: (data: Album) => <span>{data.name}</span>
+      render: (data: Album) => <span className="text">{data.name}</span>
     },
     {
       title: '时间',
