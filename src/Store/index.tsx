@@ -11,6 +11,9 @@ const isDarkMode = () =>
 export interface State {
   isDarkMode: boolean
   recommend: Recommend
+  currentSonglist: string
+  currentSong: string
+  currentRadio: string
   setData: (name: string, data: any) => void
   addState: () => void
   [propName: string]: any
@@ -36,6 +39,9 @@ export default ({ children }: any) => {
   const initAppState = {
     isDarkMode: isDarkMode(),
     recommend: {},
+    currentSonglistId: '',
+    currentSongId: '',
+    currentRadioId: '',
     setData,
     addState
   }
