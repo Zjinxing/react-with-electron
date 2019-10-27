@@ -1,0 +1,28 @@
+.mybutton {
+  border: 1px solid #575757;
+  outline: none;
+  border-radius: 3px;
+  padding: 0 15px 1px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.mybutton.dark-btn {
+  background: rgb(57, 57, 57);
+  &:hover {
+    background: rgb(69, 69, 69);
+  }
+}
+
+.primary {
+  background: #3fc080;
+  border: 1px solid #3fc080;
+  color: #fff;
+  &:hover {
+    background: #3cb67a;
+  }
+}
+
+.dark-btn.primary {
+  color: #3fc080;
+}
