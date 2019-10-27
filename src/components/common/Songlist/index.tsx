@@ -11,6 +11,30 @@ interface Props {
 }
 
 const SonglistTable: React.FC<Props> = props => {
+  const onControl = (row: SongDetail, e: React.SyntheticEvent<EventTarget>) => {
+    const { target } = e
+    if (!(target instanceof HTMLImageElement)) return
+    const { dataset } = target
+    const { name } = dataset
+    switch (name) {
+      case 'togglePlay':
+        console.log(row.id)
+        console.log('播放/暂停')
+        break
+      case 'toggleLove':
+        console.log('收藏/取消')
+        break
+      case 'download':
+        console.log('下载')
+        break
+      case 'menu':
+        console.log('菜单')
+        break
+      default:
+        break
+    }
+  }
+
   const sqTag = <img src={require('resources/cell_sq.png')} className="tag" width="26" alt="sq" />
   const mvTag = (
     <img src={require('resources/cell_mv.png')} className="tag mv" width="26" alt="mv" />
@@ -23,12 +47,14 @@ const SonglistTable: React.FC<Props> = props => {
     <span className="cell-play">
       <img
         src={require('resources/cellPlay_hl@2x.png')}
+        data-name="togglePlay"
         className="cell-play--normal"
         width="20"
         alt="play"
       />
       <img
         src={require('resources/cellPlay_hover@2x.png')}
+        data-name="togglePlay"
         className="cell-play--hover"
         width="20"
         alt="play"
@@ -40,12 +66,14 @@ const SonglistTable: React.FC<Props> = props => {
     <span className="cell-love">
       <img
         src={require('resources/cellLoveUnselected_hl@2x.png')}
+        data-name="toggleLove"
         className="cell-love--normal"
         width="20"
         alt="love"
       />
       <img
         src={require('resources/cellLoveUnselected_hover@2x.png')}
+        data-name="toggleLove"
         className="cell-love--hover"
         width="20"
         alt="love"
@@ -63,12 +91,14 @@ const SonglistTable: React.FC<Props> = props => {
     <span className="cell-download">
       <img
         src={require('resources/cellDownload_hl@2x.png')}
+        data-name="download"
         className="cell-download--normal"
         width="20"
         alt=""
       />
       <img
         src={require('resources/cellDownload_hover@2x.png')}
+        data-name="download"
         className="cell-download--hover"
         width="20"
         alt=""
@@ -91,12 +121,14 @@ const SonglistTable: React.FC<Props> = props => {
     <span className="cell-menu">
       <img
         src={require('resources/normalMenu.png')}
+        data-name="menu"
         className="cell-menu--normal"
         width="16"
         alt="menu"
       />
       <img
         src={require('resources/normalMenu_hover.png')}
+        data-name="menu"
         className="cell-menu--hover"
         width="16"
         alt="menu"
@@ -121,7 +153,7 @@ const SonglistTable: React.FC<Props> = props => {
               {/* TODO, mv 点击打开新窗口 */}
               {data.mv.vid ? mvTag : null}
             </span>
-            <span className="controls">
+            <span className="controls" onClick={e => onControl(data, e)}>
               {CellPlay}
               {CellLove}
               {CellDownload}
@@ -164,6 +196,7 @@ const SonglistTable: React.FC<Props> = props => {
       rowClassName={() => 'table-row'}
       columns={columns}
       rowKey={record => `${record.id}`}
+      pagination={false}
     ></Table>
   )
 }
