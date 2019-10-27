@@ -11,12 +11,41 @@
   @media (min-width: 1611px) {
     width: 16.6%;
   }
-  img {
-    width: 100%;
-    height: 100%;
-    transition: all 0.3s;
+  .img-wrapper {
+    position: relative;
+    margin-bottom: 10px;
+    img.list-item-cover {
+      width: 100%;
+      height: 100%;
+      transition: all 0.3s;
+    }
+    .list-item-control {
+      visibility: hidden;
+      img {
+        position: absolute;
+        right: 5px;
+        bottom: 5px;
+        width: 28px;
+        height: 28px;
+      }
+    }
     &:hover {
-      filter: brightness(70%);
+      .list-item-cover {
+        filter: brightness(70%);
+      }
+      .list-item-control {
+        &-play {
+          visibility: visible;
+        }
+        &:hover {
+          .list-item-control-play {
+            visibility: hidden;
+          }
+          .list-item-control-play--hover {
+            visibility: visible;
+          }
+        }
+      }
     }
   }
 }
