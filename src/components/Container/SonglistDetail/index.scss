@@ -1,46 +1,76 @@
 .songlist-detail {
+  &-header {
+    display: flex;
+    // background: #393939;
+    padding: 20px;
+    .cover {
+      min-width: 150px;
+      height: 150px;
+      margin-right: 25px;
+    }
+    .songlist-info {
+      font-size: PingFangSC-Regular, sans-serif;
+      &-title {
+        text-align: left;
+        margin-bottom: 10px;
+        font-size: 25px;
+        font-weight: bolder;
+      }
+      &-summary {
+        display: flex;
+        font-size: 13px;
+        align-items: center;
+        &--createtime {
+          color: #818181;
+          margin: 0 2px 0 10px;
+        }
+        &--tags {
+          display: flex;
+          margin: 0;
+          li {
+            background: #505050;
+            margin-right: 5px;
+            padding: 0 8px;
+            font-size: 13px;
+            border-radius: 12px;
+            cursor: pointer;
+            &:hover {
+              color: #3fc080;
+            }
+          }
+        }
+      }
+      &-desc {
+        position: relative;
+        height: 48px;
+        padding-right: 50px;
+        overflow: hidden;
+        padding-top: 5px;
+        line-height: 24px;
+        font-size: 12.5px;
+        text-align: left;
+        span {
+          color: #818181;
+        }
+        .unfold {
+          position: absolute;
+          right: 0;
+          bottom: -5px;
+          color: #fff;
+          cursor: pointer;
+          &:hover {
+            color: #3fc080;
+          }
+        }
+      }
+      &-control {
+        display: flex;
+        width: 530px;
+        justify-content: space-between;
+      }
+    }
+  }
   &-content {
     padding: 0 25px 0 5px;
-    // .ant-table .ant-table-body .ant-table-thead th {
-    //   background: #393939;
-    //   color: #888;
-    //   border-bottom: 1px solid #393939;
-    //   padding: 10px;
-    //   font-size: 12px;
-    // }
-    // .table-row {
-    //   color: #fff;
-    //   td {
-    //     border-bottom: 1px solid #393939;
-    //     padding: 10px;
-    //   }
-    //   td.name-col,
-    //   td.album-col,
-    //   td.singer-col {
-    //     span {
-    //       overflow: hidden;
-    //       text-overflow: ellipsis;
-    //       display: -webkit-box;
-    //       -webkit-line-clamp: 1;
-    //       -webkit-box-orient: vertical;
-    //     }
-    //   }
-    //   .name-content {
-    //     display: flex;
-    //     .tags {
-    //       .tag {
-    //         margin-left: 5px;
-    //       }
-    //       .mv:hover {
-    //         cursor: pointer;
-    //       }
-    //     }
-    //   }
-    //   &:hover {
-    //     td {
-    //       background: #303030 !important;
-    //     }
-    //   }
-    // }
   }
 }

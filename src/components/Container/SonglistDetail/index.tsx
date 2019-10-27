@@ -1,18 +1,23 @@
-import React, { useState, useEffect, ReactNode } from 'react'
+import React, { useState, useEffect, ReactNode, useContext } from 'react'
 import { RouteComponentProps } from 'react-router'
+import dayjs from 'dayjs'
 import { GET_SONGLIST_DETAIL } from 'request/GetSongList'
-import { SonglistDetail, SongDetail, Singer, Album } from 'request/types/Playlist'
-import { Table } from 'antd'
-import { ColumnProps } from 'antd/es/table'
+import { SonglistDetail } from 'request/types/Playlist'
 import SonglistTable from 'components/common/Songlist'
-import { formatSeconds } from 'utils'
+import MyButton from 'components/common/MyButton'
+import { AppContext, State } from 'Store'
 import './index.scss'
 
 const SonglistDetailFC: React.FC<RouteComponentProps> = props => {
-  console.log(props.location.state)
+  const { isDarkMode } = useContext(AppContext) as State
   const [songlistDetail, setSonglistDetail] = useState<SonglistDetail>()
 
+  let SonglistDesc: ReactNode
   let SongTable: ReactNode
+
+  const tagClick = (tag: { id: number; name: string; pid: number }) => {
+    console.log(tag)
+  }
 
   useEffect(() => {
     ;(async () => {
@@ -23,14 +28,63 @@ const SonglistDetailFC: React.FC<RouteComponentProps> = props => {
   }, [])
   if (songlistDetail && !songlistDetail.response.code) {
     console.log('...', songlistDetail)
-    const tableData = songlistDetail.response.cdlist[0].songlist
-    console.log(tableData)
-    SongTable = <SonglistTable songTableData={tableData}></SonglistTable>
+    const cd = songlistDetail.response.cdlist[0]
+    SongTable = <SonglistTable songTableData={cd.songlist}></SonglistTable>
+
+    SonglistDesc = (
+      <>
+        <img src={cd.dir_pic_url2} alt={cd.dissname} width="150" className="cover" />
+        <div className="songlist-info">
+          <h2 className="songlist-info-title">{cd.dissname}</h2>
+          <div className="songlist-info-summary">
+            <span className="creator-nickname">{cd.nickname}</span>
+            <span className="songlist-info-summary--createtime">
+              {dayjs(cd.ctime * 1000).format('YYYY-MM-DD')}创建
+            </span>
+            <ul className="songlist-info-summary--tags">
+              {cd.tags.map(tag => (
+                <li key={tag.id} onClick={() => tagClick(tag)}>
+                  {tag.name}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <p className="songlist-info-desc">
+            <span>{cd.desc.replace(/(&nbsp;)|(&#160;)/g, ' ')}</span>
+            <span className="unfold">[展开]</span>
+          </p>
+          <div className="songlist-info-control">
+            <MyButton type="primary">
+              <img src={require('resources/cellPlay_hover@2x.png')} width="16" alt="" />
+              播放全部
+            </MyButton>
+            <MyButton>
+              &nbsp;
+              <img src={require('resources/cellLoveUnselected_hl@2x.png')} width="16" alt="" />
+              收藏 &nbsp;
+            </MyButton>
+            <MyButton>
+              <img src={require('resources/batch_hl.png')} width="16" alt="" />
+              批量操作
+            </MyButton>
+            <MyButton>
+              <img src={require('resources/cellDownload_hl@2x.png')} width="18" alt="" />
+              下载全部
+            </MyButton>
+            <MyButton>
+              &nbsp;
+              <img src={require('resources/pop_share_hl@2x.png')} width="14" alt="" />
+              &nbsp; 分享 &nbsp;
+            </MyButton>
+          </div>
+        </div>
+      </>
+    )
   }
 
   return (
-    <div className="songlist-detail">
-      <div className="songlist-detail-header">歌单简介</div>
+    <div className={`songlist-detail ${isDarkMode ? 'dark-mode' : ''}`}>
+      <div className="songlist-detail-header">{SonglistDesc}</div>
       <div className="songlist-detail-content">{SongTable}</div>
     </div>
   )
