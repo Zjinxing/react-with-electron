@@ -16,7 +16,6 @@ const OfficialSonglist: React.FC = () => {
   if (officialSonglist) {
     const playlist = officialSonglist.playlist.data.v_playlist
     const showList = playlist.slice(0, 6)
-    console.log(showList)
     coverList = showList.map(item => <PlaylistCover playlistInfo={item} key={item.tid} />)
   }
 
