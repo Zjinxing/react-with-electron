@@ -14,7 +14,9 @@
 
 .dark {
   background: #2d2d2d;
-  color: #fff;
+  * {
+    color: #fff;
+  }
 
   a {
     color: #fff;
