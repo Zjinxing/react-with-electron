@@ -1,5 +1,6 @@
 import instance from './Http'
 import { Playlist, SonglistDetail } from './types/Playlist'
+import { MusicVkey } from './types/MusicVkey'
 
 export const GET_OFFICIAL_SONGLIST = async () => {
   const result = await instance.get(
@@ -11,4 +12,9 @@ export const GET_OFFICIAL_SONGLIST = async () => {
 export const GET_SONGLIST_DETAIL = async (params: { disstid: number }) => {
   const result = await instance.get('getSongListDetail', { params })
   return (result as unknown) as SonglistDetail
+}
+
+export const GET_MUSIC_VKEY = async (params: { songmid: string }) => {
+  const result = await instance.get('getMusicVKey', { params })
+  return (result as unknown) as MusicVkey
 }
