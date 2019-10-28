@@ -1,7 +1,7 @@
 import React, { useState, useEffect, ReactNode, useContext } from 'react'
 import { RouteComponentProps } from 'react-router'
 import dayjs from 'dayjs'
-import { GET_SONGLIST_DETAIL } from 'request/GetSongList'
+import { GET_SONGLIST_DETAIL, GET_MUSIC_VKEY } from 'request/GetSongList'
 import { SonglistDetail } from 'request/types/Playlist'
 import SonglistTable from 'components/common/Songlist'
 import MyButton from 'components/common/MyButton'
@@ -19,6 +19,12 @@ const SonglistDetailFC: React.FC<RouteComponentProps> = props => {
     console.log(tag)
   }
 
+  const togglePlay = async (mid: string) => {
+    console.log('toggle play')
+    const result = await GET_MUSIC_VKEY({ songmid: mid })
+    console.log(result)
+  }
+
   useEffect(() => {
     ;(async () => {
       const listDetail = await GET_SONGLIST_DETAIL({ disstid: props.location.state })
@@ -29,7 +35,7 @@ const SonglistDetailFC: React.FC<RouteComponentProps> = props => {
   if (songlistDetail && !songlistDetail.response.code) {
     console.log('...', songlistDetail)
     const cd = songlistDetail.response.cdlist[0]
-    SongTable = <SonglistTable songTableData={cd.songlist}></SonglistTable>
+    SongTable = <SonglistTable songTableData={cd.songlist} togglePlay={togglePlay}></SonglistTable>
 
     SonglistDesc = (
       <>

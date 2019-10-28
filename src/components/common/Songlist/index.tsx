@@ -7,19 +7,20 @@ import './index.scss'
 
 interface Props {
   songTableData: SongDetail[]
+  togglePlay: (param: string) => Promise<void>
   children?: ReactNode
 }
 
 const SonglistTable: React.FC<Props> = props => {
-  const onControl = (row: SongDetail, e: React.SyntheticEvent<EventTarget>) => {
+  const onControl = async (row: SongDetail, e: React.SyntheticEvent<EventTarget>) => {
     const { target } = e
     if (!(target instanceof HTMLImageElement)) return
     const { dataset } = target
     const { name } = dataset
     switch (name) {
       case 'togglePlay':
-        console.log(row.id)
-        console.log('播放/暂停')
+        console.log(row)
+        await props.togglePlay(row.mid)
         break
       case 'toggleLove':
         console.log('收藏/取消')
