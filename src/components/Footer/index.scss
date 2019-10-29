@@ -8,6 +8,7 @@
   border: 1px dashed #f09;
   box-sizing: border-box;
   &-control {
+    position: absolute;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -44,6 +45,14 @@
         filter: drop-shadow(24px 0 #3fc080);
       }
     }
+  }
+  &-progress {
+    width: 100%;
+    height: 100%;
+    padding-left: 215px;
+    box-sizing: border-box;
+    color: #f09;
+    text-align: left;
   }
 }
 
