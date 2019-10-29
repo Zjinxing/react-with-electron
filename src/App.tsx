@@ -19,12 +19,12 @@ const AppContainer: React.FC = () => {
       systemPreferences.subscribeNotification(
         'AppleInterfaceThemeChangedNotification',
         function theThemeHasChanged() {
-          setData('isDarkMode', sysDarkMode())
+          setData({ isDarkMode: sysDarkMode() })
           // isDarkMode = systemPreferences.isDarkMode()
         }
       )
       const recommend = await GET_RECOMMEND()
-      setData('recommend', recommend)
+      setData({ recommend })
     })()
   }, [setData])
   return (
