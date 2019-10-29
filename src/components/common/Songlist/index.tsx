@@ -190,7 +190,6 @@ const SonglistTable: React.FC<Props> = props => {
       render: data => <span>{formatSeconds(data)}</span>
     }
   ]
-  console.log(columns)
   return (
     <Table
       dataSource={props.songTableData}
