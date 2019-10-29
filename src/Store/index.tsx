@@ -11,20 +11,24 @@ const isDarkMode = () =>
 export interface State {
   isDarkMode: boolean
   recommend: Recommend
-  currentSonglist: string
-  currentSong: string
-  currentRadio: string
-  setData: (name: string, data: any) => void
+  currentSonglistId: string
+  currentSongMId: string
+  currentRadioId: string
+  currentSongUrl: string
+  playlistMids: string[]
+  playMode: 'loop' | 'random' | 'order'
+  setData: (data: { [key: string]: any }) => void
   addState: () => void
   [propName: string]: any
 }
 
 export default ({ children }: any) => {
-  const setData = (name: string, data: any) => {
+  const setData = (data: { [key: string]: any }) => {
+    console.log(data)
     setState(prevState => {
       return {
         ...prevState,
-        [name]: data
+        ...data
       }
     })
   }
@@ -32,7 +36,7 @@ export default ({ children }: any) => {
     setState(prevState => {
       return {
         ...prevState,
-        [name]: data
+        ...data
       }
     })
   }
@@ -41,7 +45,12 @@ export default ({ children }: any) => {
     recommend: {},
     currentSonglistId: '',
     currentSongId: '',
+    currentSongMId: '',
     currentRadioId: '',
+    currentSongUrl: '',
+    playMode: 'order',
+    playlistMids: [],
+    isPlaying: false,
     setData,
     addState
   }
