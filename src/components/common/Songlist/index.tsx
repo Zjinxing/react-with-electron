@@ -7,7 +7,7 @@ import './index.scss'
 
 interface Props {
   songTableData: SongDetail[]
-  togglePlay: (param: string) => Promise<void>
+  togglePlay: (param: SongDetail) => Promise<void>
   children?: ReactNode
 }
 
@@ -20,7 +20,7 @@ const SonglistTable: React.FC<Props> = props => {
     switch (name) {
       case 'togglePlay':
         console.log(row)
-        await props.togglePlay(row.mid)
+        await props.togglePlay(row)
         break
       case 'toggleLove':
         console.log('收藏/取消')

@@ -1,6 +1,7 @@
 import React, { createContext, useState } from 'react'
 import { remote } from 'electron'
 import Recommend from 'request/types/Recommend'
+import { SongDetail } from 'request/types/Playlist'
 const { systemPreferences } = remote
 
 export const AppContext = createContext({})
@@ -11,12 +12,12 @@ const isDarkMode = () =>
 export interface State {
   isDarkMode: boolean
   recommend: Recommend
-  currentSonglistId: string
-  currentSongMId: string
-  currentRadioId: string
-  currentSongUrl: string
-  playlistMids: string[]
-  playMode: 'loop' | 'random' | 'order'
+  currentSonglistId: string // 当前歌单Id
+  currentSongId: number // 当前正在播放歌曲Id
+  currentRadioId: string // 当前播放电台Id
+  currentSongUrl: string // 当前播放歌曲地址
+  playlist: SongDetail[] // 当前播放列表详情
+  playMode: 'loop' | 'random' | 'order' // 播放模式
   setData: (data: { [key: string]: any }) => void
   addState: () => void
   [propName: string]: any
@@ -24,7 +25,6 @@ export interface State {
 
 export default ({ children }: any) => {
   const setData = (data: { [key: string]: any }) => {
-    console.log(data)
     setState(prevState => {
       return {
         ...prevState,
@@ -44,17 +44,15 @@ export default ({ children }: any) => {
     isDarkMode: isDarkMode(),
     recommend: {},
     currentSonglistId: '',
-    currentSongId: '',
-    currentSongMId: '',
+    currentSongId: 0,
     currentRadioId: '',
     currentSongUrl: '',
     playMode: 'order',
-    playlistMids: [],
+    playlist: [],
     isPlaying: false,
     setData,
     addState
   }
-  console.log(isDarkMode())
   const [state, setState] = useState(initAppState)
   return <AppContext.Provider value={state}>{children}</AppContext.Provider>
 }

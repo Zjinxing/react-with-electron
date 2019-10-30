@@ -2,7 +2,7 @@ import React, { useState, useEffect, ReactNode, useContext } from 'react'
 import { RouteComponentProps } from 'react-router'
 import dayjs from 'dayjs'
 import { GET_SONGLIST_DETAIL, GET_MUSIC_VKEY } from 'request/GetSongList'
-import { SonglistDetail } from 'request/types/Playlist'
+import { SonglistDetail, SongDetail } from 'request/types/Playlist'
 import SonglistTable from 'components/common/Songlist'
 import MyButton from 'components/common/MyButton'
 import { AppContext, State } from 'Store'
@@ -19,13 +19,13 @@ const SonglistDetailFC: React.FC<RouteComponentProps> = props => {
     console.log(tag)
   }
 
-  const togglePlay = async (mid: string) => {
-    const result = await GET_MUSIC_VKEY({ songmid: mid })
+  const togglePlay = async (row: SongDetail) => {
+    const result = await GET_MUSIC_VKEY({ songmid: row.mid })
     console.log(result)
-    const playlist = songlistDetail!.response.cdlist[0].songlist.map(item => item.mid)
+    const playlist = songlistDetail!.response.cdlist[0].songlist
     setData({
-      currentSongMId: mid,
-      playlistMids: playlist,
+      currentSongId: row.id,
+      playlist: playlist,
       currentSongUrl: result.response.playLists[0]
     })
   }
