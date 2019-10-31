@@ -14,7 +14,8 @@ const Footer: React.FC = () => {
   const [currentTime, setCurrentTime] = useState(0) // 当前歌曲播放时间
   const [duration, setDuration] = useState(0) // 当前歌曲总时长
   const [percent, setPercent] = useState(0) // 播放进度
-  const [songName, setSongName] = useState('')
+  const [songName, setSongName] = useState('') // 当前歌曲名称
+  const [lyricShowing, setLyricShowing] = useState(false) // 是否显示桌面歌词
 
   const audioRef = React.createRef<HTMLAudioElement>()
 
@@ -85,13 +86,10 @@ const Footer: React.FC = () => {
 
   const onProgress = (e: SyntheticEvent<HTMLAudioElement>) => {
     const target = e.target as HTMLAudioElement
-    setInterval(() => {
-      const current = target.currentTime
-      const percent = duration && (current / duration) * 100
-      percent && setPercent(percent)
-      console.log(percent)
-      setCurrentTime(current)
-    }, 250)
+    const current = target.currentTime
+    const percent = duration && (current / duration) * 100
+    percent && setPercent(percent)
+    setCurrentTime(current)
   }
 
   return (
@@ -123,7 +121,7 @@ const Footer: React.FC = () => {
         </span>
       </div>
       <div className="footer-progress">
-        <img src={albumCover} alt="" width="40" height="40" className="footer-progress-cover" />
+        <img src={albumCover} alt="" width="38" height="38" className="footer-progress-cover" />
         <div className="footer-progress-content">
           <span className="song-name">{songName}</span>
           <span className="song-time">
@@ -132,7 +130,45 @@ const Footer: React.FC = () => {
           <Progress width={percent}></Progress>
         </div>
       </div>
-      <div className="footer-operator"></div>
+      <div className="footer-operator">
+        <span className="footer-operator-love">
+          <img
+            src={require(`resources/home_love${isDarkMode ? '_hl' : ''}.png`)}
+            width="20"
+            alt="添加到我喜欢"
+          />
+        </span>
+        <span className="footer-operator-download">
+          <img
+            src={require(`resources/playBarDownload${isDarkMode ? '_hl' : ''}.png`)}
+            width="20"
+            alt="download"
+          />
+        </span>
+        <span className="footer-operator-menu">
+          <img
+            src={require(`resources/normalMenu${isDarkMode ? '' : '2'}.png`)}
+            width="16"
+            alt="menu"
+          />
+        </span>
+        <span className="footer-operator-lyric">
+          <img
+            src={require(`resources/Lyrics${
+              lyricShowing ? 'Showing' : isDarkMode ? 'Normal_hl' : 'Normal'
+            }.png`)}
+            width="20"
+            alt="桌面歌词"
+          />
+        </span>
+        <span className="footer-operator-list">
+          <img
+            src={require(`resources/playList${isDarkMode ? '_hl' : ''}.png`)}
+            width="20"
+            alt="播放列表"
+          />
+        </span>
+      </div>
       <audio
         ref={audioRef}
         src={currentSongUrl}

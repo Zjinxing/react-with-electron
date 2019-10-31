@@ -54,6 +54,9 @@
     box-sizing: border-box;
     color: #f09;
     text-align: left;
+    &-cover {
+      margin-left: 2px;
+    }
     &-content {
       position: relative;
       flex: 1;
@@ -75,6 +78,29 @@
       .progress-wrapper {
         position: absolute;
         bottom: 0;
+      }
+    }
+  }
+  &-operator {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 180px;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    span {
+      min-width: 20px;
+      min-height: 20px;
+      cursor: pointer;
+      overflow: hidden;
+      &:hover {
+        img {
+          transform: translateX(-24px);
+          filter: drop-shadow(24px 0 #3fc080);
+        }
       }
     }
   }
