@@ -18,6 +18,7 @@ export interface State {
   currentSongUrl: string // 当前播放歌曲地址
   playlist: SongDetail[] // 当前播放列表详情
   playMode: 'loop' | 'random' | 'order' // 播放模式
+  isPlaying: boolean // 是否正在播放
   setData: (data: { [key: string]: any }) => void
   addState: () => void
   [propName: string]: any
