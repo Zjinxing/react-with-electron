@@ -6,9 +6,15 @@ import { formatSeconds } from 'utils'
 import './index.scss'
 
 const Footer: React.FC = () => {
-  const { isDarkMode, currentSongUrl, currentSongId, playlist, playMode, setData } = useContext(
-    AppContext
-  ) as State
+  const {
+    isDarkMode,
+    currentSongUrl,
+    currentSongId,
+    playlist,
+    playMode,
+    setData,
+    isPlaying
+  } = useContext(AppContext) as State
 
   const [albumCover, setAlbumCover] = useState('') // 当前歌曲封面图url
   const [currentTime, setCurrentTime] = useState(0) // 当前歌曲播放时间
@@ -21,7 +27,7 @@ const Footer: React.FC = () => {
 
   // 检测到当前歌曲的id发生变化开始播放
   useEffect(() => {
-    audioRef.current && audioRef.current.play()
+    // audioRef.current && audioRef.current.play()
     const currentSong = playlist.find(item => item.id === currentSongId)
     const { album, name, singer } = currentSong || {}
     album &&
@@ -33,40 +39,40 @@ const Footer: React.FC = () => {
   }, [currentSongId])
 
   const playNext = async () => {
+    setData({ isPlaying: false })
     const currentIndex = playlist.findIndex(item => item.id === currentSongId)
-    console.log({ currentSongId })
     if (playMode === 'order' || playMode === 'loop') {
       if (currentIndex === playlist.length) {
         const currentSong = await GET_MUSIC_VKEY({ songmid: playlist[0].mid })
         setData({
           currentSongUrl: currentSong.response.playLists[0],
-          currentSongMId: playlist[0]
+          currentSongId: playlist[0].id
         })
       } else {
         const currentSong = await GET_MUSIC_VKEY({ songmid: playlist[currentIndex + 1].mid })
-        console.log(' //////////////// ', currentSong)
         setData({
           currentSongUrl: currentSong.response.playLists[0],
-          currentSongMId: playlist[currentIndex + 1]
+          currentSongId: playlist[currentIndex + 1].id
         })
       }
     }
   }
 
   const playPreview = async () => {
+    setData({ isPlaying: false })
     const currentIndex = playlist.findIndex(item => item.id === currentSongId)
     if (playMode === 'order' || playMode === 'loop') {
       if (currentIndex === 0) {
         const currentSong = await GET_MUSIC_VKEY({ songmid: playlist[playlist.length - 1].mid })
         setData({
           currentSongUrl: currentSong.response.playLists[0],
-          currentSongMId: playlist[playlist.length - 1]
+          currentSongId: playlist[playlist.length - 1].id
         })
       } else {
         const currentSong = await GET_MUSIC_VKEY({ songmid: playlist[currentIndex - 1].mid })
         setData({
           currentSongUrl: currentSong.response.playLists[0],
-          currentSongMId: playlist[currentIndex - 1]
+          currentSongId: playlist[currentIndex - 1].id
         })
       }
     }
@@ -74,6 +80,7 @@ const Footer: React.FC = () => {
 
   const togglePlay = () => {
     console.log('播放/暂停')
+    setData({ isPlaying: !isPlaying })
     audioRef.current!.paused ? audioRef.current!.play() : audioRef.current!.pause()
   }
 
@@ -81,6 +88,8 @@ const Footer: React.FC = () => {
     const target = e.target as HTMLAudioElement
     console.log('准备好播放', target.duration)
     const duration = target.duration
+    audioRef.current && audioRef.current.play()
+    setData({ isPlaying: true })
     setDuration(duration)
   }
 
@@ -103,8 +112,11 @@ const Footer: React.FC = () => {
           alt="preview"
         />
         <span className="toggle-play" onClick={togglePlay}>
-          <img src={require('resources/play00000.png')} width="32" alt="play" />
-          <img src={require('resources/pause00000.png')} width="32" alt="next" />
+          <img
+            src={require(`resources/${isPlaying ? 'pause' : 'play'}00000.png`)}
+            width="32"
+            alt="play"
+          />
         </span>
         <img
           src={require('resources/playNext.png')}
