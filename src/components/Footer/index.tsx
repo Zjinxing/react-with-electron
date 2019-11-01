@@ -25,9 +25,8 @@ const Footer: React.FC = () => {
 
   const audioRef = React.createRef<HTMLAudioElement>()
 
-  // 检测到当前歌曲的id发生变化开始播放
+  // 检测到当前播放状态变化
   useEffect(() => {
-    // audioRef.current && audioRef.current.play()
     const currentSong = playlist.find(item => item.id === currentSongId)
     const { album, name, singer } = currentSong || {}
     album &&
@@ -36,7 +35,8 @@ const Footer: React.FC = () => {
       )
     const singerName = singer && singer.map(item => item.name).join('/')
     name && setSongName(`${name} - ${singerName}`)
-  }, [currentSongId])
+    isPlaying ? audioRef.current!.play() : audioRef.current!.pause()
+  }, [isPlaying])
 
   const playNext = async () => {
     setData({ isPlaying: false })
@@ -81,14 +81,12 @@ const Footer: React.FC = () => {
   const togglePlay = () => {
     console.log('播放/暂停')
     setData({ isPlaying: !isPlaying })
-    audioRef.current!.paused ? audioRef.current!.play() : audioRef.current!.pause()
   }
 
   const handleCanPlay = (e: SyntheticEvent<HTMLAudioElement, Event>) => {
     const target = e.target as HTMLAudioElement
     console.log('准备好播放', target.duration)
     const duration = target.duration
-    audioRef.current && audioRef.current.play()
     setData({ isPlaying: true })
     setDuration(duration)
   }

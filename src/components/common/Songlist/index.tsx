@@ -161,7 +161,7 @@ const SonglistTable: React.FC<Props> = props => {
               {data.isonly ? onlyTag : null}
               {/* TODO, mv 点击打开新窗口 */}
               {data.mv.vid ? mvTag : null}
-              {currentSongId === data.id && <SongWave />}
+              {currentSongId === data.id && isPlaying && <SongWave />}
             </span>
             <span className="controls" onClick={e => onControl(data, e)}>
               {CellPlay(data)}

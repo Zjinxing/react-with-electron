@@ -9,7 +9,7 @@ import { AppContext, State } from 'Store'
 import './index.scss'
 
 const SonglistDetailFC: React.FC<RouteComponentProps> = props => {
-  const { isDarkMode, setData } = useContext(AppContext) as State
+  const { isDarkMode, setData, currentSongId, isPlaying } = useContext(AppContext) as State
   const [songlistDetail, setSonglistDetail] = useState<SonglistDetail>()
 
   let SonglistDesc: ReactNode
@@ -20,14 +20,17 @@ const SonglistDetailFC: React.FC<RouteComponentProps> = props => {
   }
 
   const togglePlay = async (row: SongDetail) => {
-    const result = await GET_MUSIC_VKEY({ songmid: row.mid })
-    console.log(result)
-    const playlist = songlistDetail!.response.cdlist[0].songlist
-    setData({
-      currentSongId: row.id,
-      playlist: playlist,
-      currentSongUrl: result.response.playLists[0]
-    })
+    if (row.id === currentSongId) {
+      setData({ isPlaying: !isPlaying })
+    } else {
+      const result = await GET_MUSIC_VKEY({ songmid: row.mid })
+      const playlist = songlistDetail!.response.cdlist[0].songlist
+      setData({
+        currentSongId: row.id,
+        playlist: playlist,
+        currentSongUrl: result.response.playLists[0]
+      })
+    }
   }
 
   useEffect(() => {
