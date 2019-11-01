@@ -1,8 +1,10 @@
-import React, { ReactNode } from 'react'
+import React, { ReactNode, useContext } from 'react'
 import { SongDetail, Singer, Album } from 'request/types/Playlist'
 import { Table } from 'antd'
 import { ColumnProps } from 'antd/lib/table'
 import { formatSeconds } from 'utils'
+import { AppContext, State } from 'Store'
+import SongWave from '../SongWave'
 import './index.scss'
 
 interface Props {
@@ -12,6 +14,8 @@ interface Props {
 }
 
 const SonglistTable: React.FC<Props> = props => {
+  const { isDarkMode, isPlaying, currentSongId } = useContext(AppContext) as State
+
   const onControl = async (row: SongDetail, e: React.SyntheticEvent<EventTarget>) => {
     const { target } = e
     if (!(target instanceof HTMLImageElement)) return
@@ -44,17 +48,21 @@ const SonglistTable: React.FC<Props> = props => {
     <img src={require('resources/cell_only.png')} className="tag" width="26" alt="独家" />
   )
 
-  const CellPlay = (
+  const CellPlay = (row: SongDetail) => (
     <span className="cell-play">
       <img
-        src={require('resources/cellPlay_hl@2x.png')}
+        src={require(`resources/cell${isPlaying && row.id === currentSongId ? 'Pause' : 'Play'}${
+          isDarkMode ? '_hl' : ''
+        }@2x.png`)}
         data-name="togglePlay"
         className="cell-play--normal"
         width="20"
         alt="play"
       />
       <img
-        src={require('resources/cellPlay_hover@2x.png')}
+        src={require(`resources/cell${
+          isPlaying && row.id === currentSongId ? 'Pause' : 'Play'
+        }_hover@2x.png`)}
         data-name="togglePlay"
         className="cell-play--hover"
         width="20"
@@ -153,9 +161,10 @@ const SonglistTable: React.FC<Props> = props => {
               {data.isonly ? onlyTag : null}
               {/* TODO, mv 点击打开新窗口 */}
               {data.mv.vid ? mvTag : null}
+              {currentSongId === data.id && <SongWave />}
             </span>
             <span className="controls" onClick={e => onControl(data, e)}>
-              {CellPlay}
+              {CellPlay(data)}
               {CellLove}
               {CellDownload}
               {Menu}

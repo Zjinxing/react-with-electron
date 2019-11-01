@@ -41,11 +41,12 @@
       }
       &:hover {
         .controls {
-          display: flex;
+          visibility: visible;
         }
       }
       .controls {
-        display: none;
+        display: flex;
+        visibility: hidden;
         width: 80px;
         margin-right: 10px;
         cursor: pointer;
