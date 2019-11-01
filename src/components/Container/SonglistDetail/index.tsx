@@ -25,10 +25,13 @@ const SonglistDetailFC: React.FC<RouteComponentProps> = props => {
     } else {
       const result = await GET_MUSIC_VKEY({ songmid: row.mid })
       const playlist = songlistDetail!.response.cdlist[0].songlist
+      const { name, singer } = row
+      const singerName = singer && singer.map(item => item.name).join('/')
       setData({
         currentSongId: row.id,
         playlist: playlist,
-        currentSongUrl: result.response.playLists[0]
+        currentSongUrl: result.response.playLists[0],
+        currentSongName: `${name} - ${singerName}`
       })
     }
   }

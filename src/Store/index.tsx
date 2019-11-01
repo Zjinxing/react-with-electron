@@ -16,8 +16,9 @@ export interface State {
   currentSongId: number // 当前正在播放歌曲Id
   currentRadioId: string // 当前播放电台Id
   currentSongUrl: string // 当前播放歌曲地址
+  currentSongName: string // 当前播放歌曲的名称
   playlist: SongDetail[] // 当前播放列表详情
-  playMode: 'loop' | 'random' | 'order' // 播放模式
+  playMode: 'loop' | 'random' | 'singleLoop' // 播放模式
   isPlaying: boolean // 是否正在播放
   setData: (data: { [key: string]: any }) => void
   addState: () => void
@@ -48,7 +49,8 @@ export default ({ children }: any) => {
     currentSongId: 0,
     currentRadioId: '',
     currentSongUrl: '',
-    playMode: 'order',
+    currentSongName: '',
+    playMode: 'loop',
     playlist: [],
     isPlaying: false,
     setData,

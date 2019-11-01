@@ -10,6 +10,7 @@ const Footer: React.FC = () => {
     isDarkMode,
     currentSongUrl,
     currentSongId,
+    currentSongName,
     playlist,
     playMode,
     setData,
@@ -20,8 +21,13 @@ const Footer: React.FC = () => {
   const [currentTime, setCurrentTime] = useState(0) // 当前歌曲播放时间
   const [duration, setDuration] = useState(0) // 当前歌曲总时长
   const [percent, setPercent] = useState(0) // 播放进度
-  const [songName, setSongName] = useState('') // 当前歌曲名称
   const [lyricShowing, setLyricShowing] = useState(false) // 是否显示桌面歌词
+
+  enum modeMap {
+    loop = 'playModeLoop',
+    singleLoop = 'playModeSingleLoop',
+    random = 'playModeRandom'
+  }
 
   const audioRef = React.createRef<HTMLAudioElement>()
 
@@ -34,14 +40,14 @@ const Footer: React.FC = () => {
         `https://y.gtimg.cn/music/photo_new/T002R800x800M000${album.mid}.jpg?max_age=2592000`
       )
     const singerName = singer && singer.map(item => item.name).join('/')
-    name && setSongName(`${name} - ${singerName}`)
+    name && setData({ currentSongName: `${name} - ${singerName}` })
     isPlaying ? audioRef.current!.play() : audioRef.current!.pause()
   }, [isPlaying])
 
   const playNext = async () => {
     setData({ isPlaying: false })
     const currentIndex = playlist.findIndex(item => item.id === currentSongId)
-    if (playMode === 'order' || playMode === 'loop') {
+    if (playMode === 'singleLoop' || playMode === 'loop') {
       if (currentIndex === playlist.length) {
         const currentSong = await GET_MUSIC_VKEY({ songmid: playlist[0].mid })
         setData({
@@ -55,13 +61,15 @@ const Footer: React.FC = () => {
           currentSongId: playlist[currentIndex + 1].id
         })
       }
+    } else {
+      playRandom()
     }
   }
 
   const playPreview = async () => {
     setData({ isPlaying: false })
     const currentIndex = playlist.findIndex(item => item.id === currentSongId)
-    if (playMode === 'order' || playMode === 'loop') {
+    if (playMode === 'singleLoop' || playMode === 'loop') {
       if (currentIndex === 0) {
         const currentSong = await GET_MUSIC_VKEY({ songmid: playlist[playlist.length - 1].mid })
         setData({
@@ -75,7 +83,19 @@ const Footer: React.FC = () => {
           currentSongId: playlist[currentIndex - 1].id
         })
       }
+    } else {
+      playRandom()
     }
+  }
+
+  const playRandom = async () => {
+    setData({ isPlaying: false })
+    const randomIndex = ~~(Math.random() * playlist.length)
+    const willPlaySong = await GET_MUSIC_VKEY({ songmid: playlist[randomIndex].mid })
+    setData({
+      currentSongUrl: willPlaySong.response.playLists[0],
+      currentSongId: playlist[randomIndex].id
+    })
   }
 
   const togglePlay = () => {
@@ -83,10 +103,26 @@ const Footer: React.FC = () => {
     setData({ isPlaying: !isPlaying })
   }
 
+  // 播放模式切换
+  const togglePlayMode = () => {
+    switch (playMode) {
+      case 'loop':
+        setData({ playMode: 'singleLoop' })
+        break
+      case 'singleLoop':
+        setData({ playMode: 'random' })
+        break
+      default:
+        setData({ playMode: 'loop' })
+        break
+    }
+  }
+
   const handleCanPlay = (e: SyntheticEvent<HTMLAudioElement, Event>) => {
     const target = e.target as HTMLAudioElement
     console.log('准备好播放', target.duration)
     const duration = target.duration
+    target.play()
     setData({ isPlaying: true })
     setDuration(duration)
   }
@@ -97,6 +133,22 @@ const Footer: React.FC = () => {
     const percent = duration && (current / duration) * 100
     percent && setPercent(percent)
     setCurrentTime(current)
+  }
+
+  const onEnded = (e: SyntheticEvent<HTMLAudioElement>) => {
+    const target = e.target as HTMLAudioElement
+    switch (playMode) {
+      case 'singleLoop':
+        target.play()
+        break
+      case 'loop':
+        playNext()
+        break
+      case 'random':
+        playRandom()
+      default:
+        break
+    }
   }
 
   return (
@@ -126,14 +178,18 @@ const Footer: React.FC = () => {
         <span className="volume">
           <img src={require(`resources/volume${isDarkMode ? '_hl' : ''}.png`)} width="16" alt="" />
         </span>
-        <span className="play-mode">
-          <img src={require('resources/playModeLoop_hl.png')} width="20px" alt="loop" />
+        <span onClick={togglePlayMode} className="play-mode">
+          <img
+            src={require(`resources/${modeMap[playMode]}${isDarkMode ? '_hl' : ''}.png`)}
+            width="20px"
+            alt="loop"
+          />
         </span>
       </div>
       <div className="footer-progress">
         <img src={albumCover} alt="" width="38" height="38" className="footer-progress-cover" />
         <div className="footer-progress-content">
-          <span className="song-name">{songName}</span>
+          <span className="song-name">{currentSongName}</span>
           <span className="song-time">
             {formatSeconds(currentTime)} / {formatSeconds(duration)}
           </span>
@@ -184,6 +240,7 @@ const Footer: React.FC = () => {
         src={currentSongUrl}
         onCanPlay={handleCanPlay}
         onTimeUpdate={onProgress}
+        onEnded={onEnded}
       ></audio>
     </div>
   )
