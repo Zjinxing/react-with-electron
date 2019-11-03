@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState, SyntheticEvent, useRef } from 'react'
 import { AppContext, State } from 'Store/index'
 import { GET_MUSIC_VKEY } from 'request/GetSongList'
-import Progress from 'components/common/Progress'
+import Progress, { TargetInfo, MousePos } from 'components/common/Progress'
 import VolumeControl from 'components/common/VolumeControl'
 import { formatSeconds } from 'utils'
 import './index.scss'
@@ -23,6 +23,7 @@ const Footer: React.FC = () => {
   const [duration, setDuration] = useState(0) // 当前歌曲总时长
   const [percent, setPercent] = useState(0) // 播放进度
   const [lyricShowing, setLyricShowing] = useState(false) // 是否显示桌面歌词
+  const [isDragging, setIsDragging] = useState(false) // 是否正在拖动进度条
 
   enum modeMap {
     loop = 'playModeLoop',
@@ -132,7 +133,7 @@ const Footer: React.FC = () => {
     const target = e.target as HTMLAudioElement
     const current = target.currentTime
     const percent = duration && (current / duration) * 100
-    percent && setPercent(percent)
+    percent && !isDragging && setPercent(percent)
     setCurrentTime(current)
   }
 
@@ -149,6 +150,28 @@ const Footer: React.FC = () => {
         playRandom()
       default:
         break
+    }
+  }
+
+  const changeProgress = (targetInfo: TargetInfo, pos: MousePos) => {
+    setIsDragging(true)
+    const { left, width } = targetInfo
+    const { pageX, pageY } = pos
+    const compute = ((pageX - left) / width) * 100
+    const percent = compute >= 100 ? 100 : compute <= 0 ? 0 : compute
+    setPercent(percent)
+  }
+
+  const changeProgressEnd = (targetInfo: TargetInfo, pos: MousePos) => {
+    const { left, width } = targetInfo
+    const { pageX, pageY } = pos
+    if (left && width) {
+      const compute = ((pageX - left) / width) * 100
+      const percent = compute >= 100 ? 100 : compute <= 0 ? 0 : compute
+      const currentTime = (duration * percent) / 100
+      console.log('----------拖动结束---------\n', currentTime, duration, percent)
+      audioRef.current!.currentTime = currentTime
+      setIsDragging(false)
     }
   }
 
@@ -200,7 +223,11 @@ const Footer: React.FC = () => {
           <span className="song-time">
             {formatSeconds(currentTime)} / {formatSeconds(duration)}
           </span>
-          <Progress width={percent}></Progress>
+          <Progress
+            onProgressChange={changeProgress}
+            onProgressChangeEnd={changeProgressEnd}
+            width={percent}
+          ></Progress>
         </div>
       </div>
       <div className="footer-operator">

@@ -1,30 +1,30 @@
 import React, { ReactNode, useState } from 'react'
-import Progress, { targetInfo, MousePos } from '../Progress'
+import Progress, { TargetInfo, MousePos } from '../Progress'
 import './index.scss'
 
 interface Props {
   isDarkMode: boolean
-  onVolumeChange: (percent: number) => void
+  onVolumeChange: (volumePercent: number) => void
   children?: ReactNode
 }
 
 // TODO: 缓存音量
 const VolumeControl: React.FC<Props> = props => {
-  const [percent, setPercent] = useState<number>(100)
+  const [volumePercent, setVolumePercent] = useState<number>(100)
 
-  const onvolumechange = (targetInfo: targetInfo, pos: MousePos) => {
+  const onvolumechange = (targetInfo: TargetInfo, pos: MousePos) => {
     const { top, height } = targetInfo
     const { pageX, pageY } = pos
     const compute = (1 - (pageY - top) / height) * 100
-    const percent = compute >= 100 ? 100 : compute <= 0 ? 0 : compute
-    setPercent(percent)
-    props.onVolumeChange(percent)
+    const volumePercent = compute >= 100 ? 100 : compute <= 0 ? 0 : compute
+    setVolumePercent(volumePercent)
+    props.onVolumeChange(volumePercent)
   }
 
   return (
     <div className="volume-control">
       <div className="volume-control-bar">
-        <Progress onProgressChange={onvolumechange} width={percent} />
+        <Progress onProgressChange={onvolumechange} width={volumePercent} />
       </div>
       <span className="volume-icon" style={{ overflow: 'hidden' }}>
         <img
