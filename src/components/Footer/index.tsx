@@ -1,7 +1,8 @@
-import React, { useContext, useEffect, useState, SyntheticEvent } from 'react'
+import React, { useContext, useEffect, useState, SyntheticEvent, useRef } from 'react'
 import { AppContext, State } from 'Store/index'
 import { GET_MUSIC_VKEY } from 'request/GetSongList'
 import Progress from 'components/common/Progress'
+import VolumeControl from 'components/common/VolumeControl'
 import { formatSeconds } from 'utils'
 import './index.scss'
 
@@ -29,7 +30,7 @@ const Footer: React.FC = () => {
     random = 'playModeRandom'
   }
 
-  const audioRef = React.createRef<HTMLAudioElement>()
+  const audioRef = useRef<HTMLAudioElement>(null)
 
   // 检测到当前播放状态变化
   useEffect(() => {
@@ -151,6 +152,11 @@ const Footer: React.FC = () => {
     }
   }
 
+  const onVolumeChange = (percent: number) => {
+    console.log(percent)
+    audioRef.current!.volume = percent / 100
+  }
+
   return (
     <div className={`footer ${isDarkMode ? 'dark' : ''}`}>
       <div className="footer-control">
@@ -175,9 +181,10 @@ const Footer: React.FC = () => {
           height="25"
           alt="next"
         />
-        <span className="volume">
+        {/* <span className="volume">
           <img src={require(`resources/volume${isDarkMode ? '_hl' : ''}.png`)} width="16" alt="" />
-        </span>
+        </span> */}
+        <VolumeControl onVolumeChange={onVolumeChange} isDarkMode={isDarkMode} />
         <span onClick={togglePlayMode} className="play-mode">
           <img
             src={require(`resources/${modeMap[playMode]}${isDarkMode ? '_hl' : ''}.png`)}

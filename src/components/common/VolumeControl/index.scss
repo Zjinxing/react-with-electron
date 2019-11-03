@@ -1,0 +1,38 @@
+.volume-control {
+  position: relative;
+  &-bar {
+    position: absolute;
+    top: -75px;
+    left: -47.5px;
+    width: 110px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    transform: rotate(-90deg);
+    padding: 0 18px;
+    background-image: url('../../../resources/volume_bg.png');
+    background-size: 100% 100%;
+    .progress-cover,
+    .progress-background {
+      height: 3px;
+      border-radius: 1.5px;
+    }
+    .progress-truck {
+      visibility: visible;
+    }
+  }
+  .volume-icon {
+    cursor: pointer;
+    &--hover {
+      display: none;
+    }
+    &:hover {
+      .volume-icon--normal {
+        display: none;
+      }
+      .volume-icon--hover {
+        display: inline;
+      }
+    }
+  }
+}
