@@ -26,3 +26,11 @@
 .dark-btn.primary {
   color: #3fc080;
 }
+
+.mybutton.ghost {
+  background: transparent;
+  transition: all 0.5s;
+  &:hover {
+    background: rgba(57, 57, 57, 0.3);
+  }
+}

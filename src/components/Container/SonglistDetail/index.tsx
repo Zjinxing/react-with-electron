@@ -127,20 +127,20 @@ const SonglistDetailFC: React.FC<RouteComponentProps> = props => {
           <h3>{cd.dissname}</h3>
         </div>
         <div className="header-summary-control">
-          <MyButton type="primary">
+          <MyButton type="primary" ghost>
             <img src={require('resources/cellPlay_hover@2x.png')} width="16" alt="" />
             播放全部
           </MyButton>
-          <MyButton>
+          <MyButton ghost>
             &nbsp;
             <img src={require('resources/cellLoveUnselected_hl@2x.png')} width="16" alt="" />
             收藏 &nbsp;
           </MyButton>
-          <MyButton>
+          <MyButton ghost>
             <img src={require('resources/cellDownload_hl@2x.png')} width="18" alt="" />
             下载全部
           </MyButton>
-          <MyButton>
+          <MyButton ghost>
             &nbsp;
             <img src={require('resources/pop_share_hl@2x.png')} width="14" alt="" />
             &nbsp; 分享 &nbsp;

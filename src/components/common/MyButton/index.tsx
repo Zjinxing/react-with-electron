@@ -4,6 +4,7 @@ import './index.scss'
 
 interface Props {
   type?: 'primary'
+  ghost?: boolean
   children: ReactNode
 }
 
@@ -11,7 +12,11 @@ const MyButton: React.FC<Props> = props => {
   const { isDarkMode } = useContext(AppContext) as State
 
   return (
-    <button className={`mybutton ${props.type} ${isDarkMode ? 'dark-btn' : ''}`}>
+    <button
+      className={`mybutton ${props.type} ${isDarkMode ? 'dark-btn' : ''} ${
+        props.ghost ? 'ghost' : ''
+      }`}
+    >
       {props.children}
     </button>
   )
