@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ReactNode, useContext } from 'react'
+import React, { useState, useEffect, ReactNode, useContext, useRef } from 'react'
 import { RouteComponentProps } from 'react-router'
 import dayjs from 'dayjs'
 import { GET_SONGLIST_DETAIL, GET_MUSIC_VKEY } from 'request/GetSongList'
@@ -11,9 +11,13 @@ import './index.scss'
 const SonglistDetailFC: React.FC<RouteComponentProps> = props => {
   const { isDarkMode, setData, currentSongId, isPlaying } = useContext(AppContext) as State
   const [songlistDetail, setSonglistDetail] = useState<SonglistDetail>()
+  const [headerClass, setHeaderClass] = useState('')
 
   let SonglistDesc: ReactNode
   let SongTable: ReactNode
+  let HeaderSummary: ReactNode
+
+  const headerRef = useRef<HTMLDivElement>(null)
 
   const tagClick = (tag: { id: number; name: string; pid: number }) => {
     console.log(tag)
@@ -41,9 +45,29 @@ const SonglistDetailFC: React.FC<RouteComponentProps> = props => {
       const listDetail = await GET_SONGLIST_DETAIL({ disstid: props.location.state })
       setSonglistDetail(listDetail)
     })()
+    const io = new IntersectionObserver(scrollListener, { threshold: 0.005 })
+    headerRef.current && io.observe(headerRef.current)
   }, [])
+
+  const scrollListener = (entries: IntersectionObserverEntry[]) => {
+    console.log('发生变化', entries)
+    const [entry] = entries
+    const { intersectionRatio } = entry
+    const wrapper = document.querySelector('.songlist-detail')
+    wrapper && console.log('>>>', wrapper, document)
+    console.log('00000000', intersectionRatio)
+    // 不能以intersectionRation > 0 来判断，滚动很缓慢的情况很大几率出现 = 0 的情况，
+    // 无法判断向上还是向下滚动，因此添加 {threshold: 0.005} 作为触发条件
+    if (intersectionRatio < 0.005) {
+      console.log('out of view')
+      setHeaderClass('header-out')
+    } else {
+      console.log('in view')
+      setHeaderClass('')
+    }
+  }
+
   if (songlistDetail && !songlistDetail.response.code) {
-    console.log('...', songlistDetail)
     const cd = songlistDetail.response.cdlist[0]
     SongTable = <SonglistTable songTableData={cd.songlist} togglePlay={togglePlay}></SonglistTable>
 
@@ -96,11 +120,42 @@ const SonglistDetailFC: React.FC<RouteComponentProps> = props => {
         </div>
       </>
     )
+    HeaderSummary = (
+      <div className={`header-summary ${headerClass}`}>
+        <div className="header-summary-name">
+          <img src={cd.dir_pic_url2} alt={cd.dissname} width="36" className="cover" />
+          <h3>{cd.dissname}</h3>
+        </div>
+        <div className="header-summary-control">
+          <MyButton type="primary">
+            <img src={require('resources/cellPlay_hover@2x.png')} width="16" alt="" />
+            播放全部
+          </MyButton>
+          <MyButton>
+            &nbsp;
+            <img src={require('resources/cellLoveUnselected_hl@2x.png')} width="16" alt="" />
+            收藏 &nbsp;
+          </MyButton>
+          <MyButton>
+            <img src={require('resources/cellDownload_hl@2x.png')} width="18" alt="" />
+            下载全部
+          </MyButton>
+          <MyButton>
+            &nbsp;
+            <img src={require('resources/pop_share_hl@2x.png')} width="14" alt="" />
+            &nbsp; 分享 &nbsp;
+          </MyButton>
+        </div>
+      </div>
+    )
   }
 
   return (
     <div className={`songlist-detail ${isDarkMode ? 'dark-mode' : ''}`}>
-      <div className="songlist-detail-header">{SonglistDesc}</div>
+      <div ref={headerRef} className="songlist-detail-header">
+        {SonglistDesc}
+      </div>
+      {HeaderSummary}
       <div className="songlist-detail-content">{SongTable}</div>
     </div>
   )

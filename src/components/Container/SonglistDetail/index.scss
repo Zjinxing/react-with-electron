@@ -1,7 +1,7 @@
 .songlist-detail {
   &-header {
     display: flex;
-    // background: #393939;
+    background: #393939;
     padding: 20px;
     .cover {
       min-width: 150px;
@@ -69,6 +69,46 @@
         justify-content: space-between;
       }
     }
+  }
+  .header-summary {
+    position: absolute;
+    width: calc(100% - 220px);
+    top: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #000;
+    margin-right: 10px;
+    padding: 8px 20px;
+    opacity: 0;
+    transition: opacity 0.1s;
+    float: left;
+    z-index: 20;
+    &-name {
+      display: flex;
+      align-items: center;
+      img {
+        margin-right: 10px;
+      }
+      h3 {
+        width: 190px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        padding: 0;
+        margin: 0;
+      }
+    }
+    &-control {
+      display: flex;
+      height: auto;
+      justify-content: space-between;
+      width: 420px;
+    }
+  }
+  .header-summary.header-out {
+    opacity: 1;
+    transition: opacity 0.1s;
   }
   &-content {
     padding: 0 25px 0 5px;
