@@ -40,6 +40,23 @@ const SonglistDetailFC: React.FC<RouteComponentProps> = props => {
     }
   }
 
+  // 播放全部
+  const playAll = async () => {
+    if (songlistDetail) {
+      const { cdlist } = songlistDetail.response
+      const { songlist } = cdlist[0]
+      const willPlaySong = await GET_MUSIC_VKEY({ songmid: songlist[0].mid })
+      const { name, singer } = songlist[0]
+      const singerName = singer && singer.map(item => item.name).join('/')
+      setData({
+        currentSongId: songlist[0].id,
+        playlist: songlist,
+        currentSongUrl: willPlaySong.response.playLists[0],
+        currentSongName: `${name} - ${singerName}`
+      })
+    }
+  }
+
   useEffect(() => {
     ;(async () => {
       const listDetail = await GET_SONGLIST_DETAIL({ disstid: props.location.state })
@@ -94,7 +111,7 @@ const SonglistDetailFC: React.FC<RouteComponentProps> = props => {
             <span className="unfold">[展开]</span>
           </p>
           <div className="songlist-info-control">
-            <MyButton type="primary">
+            <MyButton type="primary" onClick={playAll}>
               <img src={require('resources/cellPlay_hover@2x.png')} width="16" alt="" />
               播放全部
             </MyButton>
@@ -127,7 +144,7 @@ const SonglistDetailFC: React.FC<RouteComponentProps> = props => {
           <h3>{cd.dissname}</h3>
         </div>
         <div className="header-summary-control">
-          <MyButton type="primary" ghost>
+          <MyButton type="primary" ghost onClick={playAll}>
             <img src={require('resources/cellPlay_hover@2x.png')} width="16" alt="" />
             播放全部
           </MyButton>

@@ -3,9 +3,10 @@ import { AppContext, State } from 'Store'
 import './index.scss'
 
 interface Props {
+  children?: ReactNode
   type?: 'primary'
   ghost?: boolean
-  children: ReactNode
+  onClick?: () => any
 }
 
 const MyButton: React.FC<Props> = props => {
@@ -16,6 +17,7 @@ const MyButton: React.FC<Props> = props => {
       className={`mybutton ${props.type} ${isDarkMode ? 'dark-btn' : ''} ${
         props.ghost ? 'ghost' : ''
       }`}
+      onClick={props.onClick}
     >
       {props.children}
     </button>
