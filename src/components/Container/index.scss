@@ -1,3 +1,4 @@
+@import '../../style/mixins.scss';
 .wrapper {
   position: relative;
   height: 100%;
@@ -18,4 +19,5 @@
     height: 100%;
     overflow: auto;
   }
+  @include scroll-bar();
 }

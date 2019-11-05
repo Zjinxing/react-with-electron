@@ -2,3 +2,18 @@
   background: #2d2d2d;
   color: #fff;
 }
+
+@mixin scroll-bar() {
+  ::-webkit-scrollbar {
+    width: 6px;
+    background: #2d2d2d;
+  }
+  ::-webkit-scrollbar-thumb {
+    width: 100%;
+    background: #575757;
+    border-radius: 3px;
+    &:hover {
+      background: rgb(108, 108, 108);
+    }
+  }
+}
