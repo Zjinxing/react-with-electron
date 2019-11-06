@@ -1,6 +1,7 @@
 import React, { useState, useEffect, ReactNode, useContext, useRef } from 'react'
 import { RouteComponentProps } from 'react-router'
 import dayjs from 'dayjs'
+import { Tabs } from 'antd'
 import { GET_SONGLIST_DETAIL, GET_MUSIC_VKEY } from 'request/GetSongList'
 import { SonglistDetail, SongDetail } from 'request/types/Playlist'
 import SonglistTable from 'components/common/Songlist'
@@ -12,12 +13,15 @@ const SonglistDetailFC: React.FC<RouteComponentProps> = props => {
   const { isDarkMode, setData, currentSongId, isPlaying } = useContext(AppContext) as State
   const [songlistDetail, setSonglistDetail] = useState<SonglistDetail>()
   const [headerClass, setHeaderClass] = useState('')
+  const [tabKey, setTabKey] = useState<'song' | 'comments'>('song')
 
   let SonglistDesc: ReactNode
   let SongTable: ReactNode
   let HeaderSummary: ReactNode
 
   const headerRef = useRef<HTMLDivElement>(null)
+
+  const { TabPane } = Tabs
 
   const tagClick = (tag: { id: number; name: string; pid: number }) => {
     console.log(tag)
@@ -173,7 +177,14 @@ const SonglistDetailFC: React.FC<RouteComponentProps> = props => {
         {SonglistDesc}
       </div>
       {HeaderSummary}
-      <div className="songlist-detail-content">{SongTable}</div>
+      <Tabs defaultActiveKey="song">
+        <TabPane tab="歌曲" key="song">
+          <div className="songlist-detail-content">{SongTable}</div>
+        </TabPane>
+        <TabPane tab="评论" key="comments">
+          这里是歌单评论
+        </TabPane>
+      </Tabs>
     </div>
   )
 }
