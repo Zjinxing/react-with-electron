@@ -1,4 +1,4 @@
-import React, { ReactNode, MouseEvent, useState, useRef } from 'react'
+import React, { ReactNode, MouseEvent } from 'react'
 import './index.scss'
 
 interface Props {
@@ -29,7 +29,6 @@ const Progress: React.FC<Props> = props => {
 
   const handleMouseDown = (event: MouseEvent<HTMLElement>) => {
     document.removeEventListener('mouseup', dragEnded)
-    const { pageX, pageY } = event
     const target = event.target as HTMLElement
     const [rect] = target.getClientRects() as DOMRectList
     const { left, top, width, height } = rect
@@ -63,10 +62,9 @@ const Progress: React.FC<Props> = props => {
     } else {
       timer = setTimeout(() => {
         const targetInfo = JSON.parse(localStorage.getItem('targetInfo') || '{}') as TargetInfo
-        const { top, left, height, width } = targetInfo
+        const { top, height, width } = targetInfo
         const { pageX, pageY } = (e as unknown) as MouseEvent
         const pos = { pageX, pageY }
-        console.log({ top, left, height, pageX, pageY })
         if (height && top) {
           props.onProgressChange && props.onProgressChange(targetInfo, pos)
         }
