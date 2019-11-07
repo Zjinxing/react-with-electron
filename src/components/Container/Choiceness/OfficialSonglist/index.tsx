@@ -6,7 +6,7 @@ import './index.scss'
 
 const OfficialSonglist: React.FC = () => {
   const [officialSonglist, setOfficialSonglist] = useState<Playlist>()
-  let coverList: ReactNode
+  let CoverList: ReactNode
   useEffect(() => {
     ;(async () => {
       const songlist = await GET_OFFICIAL_SONGLIST()
@@ -16,13 +16,13 @@ const OfficialSonglist: React.FC = () => {
   if (officialSonglist) {
     const playlist = officialSonglist.playlist.data.v_playlist
     const showList = playlist.slice(0, 6)
-    coverList = showList.map(item => <PlaylistCover playlistInfo={item} key={item.tid} />)
+    CoverList = showList.map(item => <PlaylistCover playlistInfo={item} key={item.tid} />)
   }
 
   return (
     <div className="official-songlist">
       <h4 className="title">官方歌单</h4>
-      <ul className="cover-list">{coverList}</ul>
+      <ul className="cover-list">{CoverList}</ul>
     </div>
   )
 }

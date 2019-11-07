@@ -1,6 +1,7 @@
 import instance from './Http'
 import { Playlist, SonglistDetail } from './types/Playlist'
 import { MusicVkey } from './types/MusicVkey'
+import { SongListComments } from './types/Comments'
 
 export const GET_OFFICIAL_SONGLIST = async () => {
   const result = await instance.get(
@@ -17,4 +18,40 @@ export const GET_SONGLIST_DETAIL = async (params: { disstid: number }) => {
 export const GET_MUSIC_VKEY = async (params: { songmid: string }) => {
   const result = await instance.get('getMusicVKey', { params })
   return (result as unknown) as MusicVkey
+}
+
+export const GET_SONGLIST_COMMENTS = async (params: {
+  topid: number
+  pagenum: number
+  pagesize: number
+  loginUin?: number
+  lasthotcommentid?: string
+}) => {
+  const common = {
+    g_tk: 5381,
+    loginUin: 0,
+    hostUin: 0,
+    format: 'json',
+    inCharset: 'utf8',
+    outCharset: 'GB2312',
+    notice: 0,
+    platform: 'yqq.json',
+    needNewCode: 0,
+    cid: 205360772,
+    reqtype: 2,
+    biztype: 3,
+    topid: params.topid,
+    cmd: 8,
+    needmusiccrit: 0,
+    pagenum: params.pagenum,
+    pagesize: params.pagesize,
+    lasthotcommentid: params.lasthotcommentid,
+    domain: 'qq.com',
+    ct: 24,
+    cv: 10101010
+  }
+  const result = await instance.get('https://c.y.qq.com/base/fcgi-bin/fcg_global_comment_h5.fcg', {
+    params: { ...common, ...params }
+  })
+  return (result as any) as SongListComments
 }

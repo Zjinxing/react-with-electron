@@ -2,8 +2,9 @@ import React, { useState, useEffect, ReactNode, useContext, useRef } from 'react
 import { RouteComponentProps } from 'react-router'
 import dayjs from 'dayjs'
 import { Tabs } from 'antd'
-import { GET_SONGLIST_DETAIL, GET_MUSIC_VKEY } from 'request/GetSongList'
+import { GET_SONGLIST_DETAIL, GET_MUSIC_VKEY, GET_SONGLIST_COMMENTS } from 'request/GetSongList'
 import { SonglistDetail, SongDetail } from 'request/types/Playlist'
+import { SongListComments } from 'request/types/Comments'
 import SonglistTable from 'components/common/Songlist'
 import MyButton from 'components/common/MyButton'
 import { AppContext, State } from 'Store'
@@ -12,8 +13,11 @@ import './index.scss'
 const SonglistDetailFC: React.FC<RouteComponentProps> = props => {
   const { isDarkMode, setData, currentSongId, isPlaying } = useContext(AppContext) as State
   const [songlistDetail, setSonglistDetail] = useState<SonglistDetail>()
+  const [commentList, setCommentList] = useState<SongListComments>()
   const [headerClass, setHeaderClass] = useState('')
   const [tabKey, setTabKey] = useState<'song' | 'comments'>('song')
+  const [songNum, setSongNum] = useState(0)
+  const [commentNum, setCommentNum] = useState(0)
 
   let SonglistDesc: ReactNode
   let SongTable: ReactNode
@@ -63,20 +67,36 @@ const SonglistDetailFC: React.FC<RouteComponentProps> = props => {
 
   useEffect(() => {
     ;(async () => {
-      const listDetail = await GET_SONGLIST_DETAIL({ disstid: props.location.state })
+      const sessionDisstid = sessionStorage.getItem('disstid')
+      !sessionDisstid && sessionStorage.setItem('disstid', props.location.state)
+      const disstid = props.location.state || sessionDisstid
+      const listDetail = await GET_SONGLIST_DETAIL({ disstid: disstid })
+      if (listDetail.response.cdlist[0]) {
+        const comments = await GET_SONGLIST_COMMENTS({
+          topid: listDetail.response.cdlist[0].dissid,
+          pagenum: 0,
+          pagesize: 25
+        })
+        console.log(comments)
+        setCommentList(comments)
+        setCommentNum(comments.comment.commenttotal)
+      }
+      console.log(listDetail)
       setSonglistDetail(listDetail)
+      setSongNum(listDetail.response.cdlist[0].songnum)
     })()
     const io = new IntersectionObserver(scrollListener, { threshold: 0.005 })
     headerRef.current && io.observe(headerRef.current)
+    return () => {
+      console.log('组件卸载')
+      sessionStorage.removeItem('disstid')
+    }
   }, [])
 
   const scrollListener = (entries: IntersectionObserverEntry[]) => {
     console.log('发生变化', entries)
     const [entry] = entries
     const { intersectionRatio } = entry
-    const wrapper = document.querySelector('.songlist-detail')
-    wrapper && console.log('>>>', wrapper, document)
-    console.log('00000000', intersectionRatio)
     // 不能以intersectionRation > 0 来判断，滚动很缓慢的情况很大几率出现 = 0 的情况，
     // 无法判断向上还是向下滚动，因此添加 {threshold: 0.005} 作为触发条件
     if (intersectionRatio < 0.005) {
@@ -178,10 +198,10 @@ const SonglistDetailFC: React.FC<RouteComponentProps> = props => {
       </div>
       {HeaderSummary}
       <Tabs defaultActiveKey="song">
-        <TabPane tab="歌曲" key="song">
+        <TabPane tab={`歌曲 (${songNum})`} key="song">
           <div className="songlist-detail-content">{SongTable}</div>
         </TabPane>
-        <TabPane tab="评论" key="comments">
+        <TabPane tab={`评论 (${commentNum})`} key="comments">
           这里是歌单评论
         </TabPane>
       </Tabs>
