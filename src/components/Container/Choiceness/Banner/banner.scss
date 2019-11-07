@@ -2,7 +2,7 @@
   position: relative;
   width: 100%;
   height: calc((100vw - 215px) * 0.3);
-  max-height: 310px;
+  max-height: 330px;
   box-sizing: border-box;
   overflow: hidden;
   ul {
@@ -12,8 +12,8 @@
     li {
       position: absolute;
       display: inline-block;
-      width: calc((100vw - 215px) * 0.5);
-      max-width: 545px;
+      width: calc((100vw - 215px) * 0.55);
+      max-width: 560px;
       height: calc((100vw - 215px) * 0.5 * 0.4);
       max-height: 218px;
       writing-mode: horizontal-tb;
