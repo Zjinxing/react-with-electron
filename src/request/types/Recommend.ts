@@ -17,6 +17,28 @@ export interface FocusContent {
   type: number
 }
 
+// 达人歌单列表
+export interface HotPlaylistItem {
+  album_pic_mid: string
+  content_id: number
+  cover: string
+  creator: number
+  edge_mark: string
+  id: number
+  is_dj: boolean
+  is_vip: boolean
+  jump_url: string
+  listen_num: number
+  pic_mid: string
+  rcmdcontent: string
+  rcmdtemplate: string
+  rcmdtype: number
+  title: string
+  tjreport: string
+  type: number
+  username: string
+}
+
 export default interface Recommend {
   response: {
     category: any
@@ -33,7 +55,13 @@ export default interface Recommend {
     new_album_tag: any
     new_song: any
     playlist: any
-    recomPlaylist: any
+    recomPlaylist: {
+      code: number
+      data: {
+        page: number
+        v_hot: HotPlaylistItem[]
+      }
+    }
     toplist: any
     code: number
     ts: number
