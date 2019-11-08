@@ -114,7 +114,7 @@ const SonglistDetailFC: React.FC<RouteComponentProps> = props => {
 
     SonglistDesc = (
       <>
-        <img src={cd.dir_pic_url2} alt={cd.dissname} width="150" className="cover" />
+        <img src={cd.logo} alt={cd.dissname} width="150" className="cover" />
         <div className="songlist-info">
           <h2 className="songlist-info-title">{cd.dissname}</h2>
           <div className="songlist-info-summary">
@@ -164,7 +164,7 @@ const SonglistDetailFC: React.FC<RouteComponentProps> = props => {
     HeaderSummary = (
       <div className={`header-summary ${headerClass}`}>
         <div className="header-summary-name">
-          <img src={cd.dir_pic_url2} alt={cd.dissname} width="36" className="cover" />
+          <img src={cd.logo} alt={cd.dissname} width="36" className="cover" />
           <h3>{cd.dissname}</h3>
         </div>
         <div className="header-summary-control">

@@ -3,7 +3,6 @@ import { AppContext, State } from 'Store'
 import Banner from './Banner/Banner'
 import OfficialSonglist from './OfficialSonglist'
 import HipsterSonglist from './HipsterSonglist'
-import { HotPlaylistItem } from 'request/types/Recommend'
 
 const Choiceness: React.FC = () => {
   const { recommend } = useContext(AppContext) as State
