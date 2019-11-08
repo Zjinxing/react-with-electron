@@ -64,7 +64,7 @@ export interface Album {
   subtitle: string
 }
 
-export interface SongDetail {
+export interface SongDetailCommon {
   id: number
   type: number
   songtype: number
@@ -82,8 +82,6 @@ export interface SongDetail {
   fnote: number
   url: string
   time_public: string
-  singer: Singer[]
-  album: Album
   mv: {
     id: number
     vid: string
@@ -135,6 +133,11 @@ export interface SongDetail {
     alert: number
     icons: number
   }
+}
+
+export interface SongDetail extends SongDetailCommon {
+  singer: Singer[]
+  album: Album
 }
 
 export interface ListContent {

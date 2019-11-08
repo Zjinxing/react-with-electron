@@ -1,3 +1,5 @@
+import { Singer, Album, SongDetailCommon } from './Playlist'
+
 export interface FocusContent {
   cover: string
   id: number
@@ -39,6 +41,28 @@ export interface HotPlaylistItem {
   username: string
 }
 
+export interface Lan {
+  lan: string
+  name: string
+  tjreport: string
+  type: number
+}
+
+interface NewSongSinger extends Singer {
+  type: number
+  uin: number
+}
+
+interface NewSongAlbum extends Album {
+  pmid: string
+  time_public: string
+}
+
+export interface NewSongDetail extends SongDetailCommon {
+  singer: NewSongSinger
+  album: NewSongAlbum
+}
+
 export default interface Recommend {
   response: {
     category: any
@@ -53,7 +77,16 @@ export default interface Recommend {
     }
     new_album: any
     new_album_tag: any
-    new_song: any
+    new_song: {
+      code: number
+      data: {
+        lan: string
+        lanlist: Lan[]
+        ret_msg: string
+        songlist: NewSongDetail[]
+        type: number
+      }
+    }
     playlist: any
     recomPlaylist: {
       code: number
