@@ -1,29 +1,27 @@
 .wave-wrapper {
   position: relative;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
+  display: grid;
+  grid-template-columns: 2px 2px 2px 2px;
+  column-gap: 2px;
   width: 14px;
+  height: 13px;
   margin: 0 3px;
-  padding: 3px 0 0;
+  padding: 0 0 3px;
+  transform: rotateZ(180deg);
   span {
     width: 2px;
     background: #3fc080;
     &:first-child {
       height: 20%;
-      // animation: firstWave 1s linear infinite;
     }
     &:nth-child(2) {
       height: 60%;
-      // animation: secondWave 1s linear infinite;
     }
     &:nth-child(3) {
       height: 50%;
-      // animation: thirdWave 1s linear infinite;
     }
     &:nth-child(4) {
       height: 100%;
-      // animation: lastWave 1s linear infinite;
     }
   }
 }
