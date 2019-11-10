@@ -44,7 +44,7 @@ const Footer: React.FC = () => {
     const singerName = singer && singer.map(item => item.name).join('/')
     name && setData({ currentSongName: `${name} - ${singerName}` })
     isPlaying ? audioRef.current!.play() : audioRef.current!.pause()
-  }, [isPlaying])
+  }, [isPlaying, currentSongId])
 
   const playNext = async () => {
     setData({ isPlaying: false })
