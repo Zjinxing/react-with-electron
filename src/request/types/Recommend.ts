@@ -59,7 +59,7 @@ interface NewSongAlbum extends Album {
 }
 
 export interface NewSongDetail extends SongDetailCommon {
-  singer: NewSongSinger
+  singer: NewSongSinger[]
   album: NewSongAlbum
 }
 

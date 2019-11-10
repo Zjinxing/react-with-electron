@@ -5,6 +5,7 @@ import { ColumnProps } from 'antd/lib/table'
 import { formatSeconds } from 'utils'
 import { AppContext, State } from 'Store'
 import SongWave from '../SongWave'
+import SongControl from '../SongControl'
 import './index.scss'
 
 interface Props {
@@ -16,133 +17,12 @@ interface Props {
 const SonglistTable: React.FC<Props> = props => {
   const { isDarkMode, isPlaying, currentSongId } = useContext(AppContext) as State
 
-  const onControl = async (row: SongDetail, e: React.SyntheticEvent<EventTarget>) => {
-    const { target } = e
-    if (!(target instanceof HTMLImageElement)) return
-    const { dataset } = target
-    const { name } = dataset
-    switch (name) {
-      case 'togglePlay':
-        console.log(row)
-        await props.togglePlay(row)
-        break
-      case 'toggleLove':
-        console.log('收藏/取消')
-        break
-      case 'download':
-        console.log('下载')
-        break
-      case 'menu':
-        console.log('菜单')
-        break
-      default:
-        break
-    }
-  }
-
   const sqTag = <img src={require('resources/cell_sq.png')} className="tag" width="26" alt="sq" />
   const mvTag = (
     <img src={require('resources/cell_mv.png')} className="tag mv" width="26" alt="mv" />
   )
   const onlyTag = (
     <img src={require('resources/cell_only.png')} className="tag" width="26" alt="独家" />
-  )
-
-  const CellPlay = (row: SongDetail) => (
-    <span className="cell-play">
-      <img
-        src={require(`resources/cell${isPlaying && row.id === currentSongId ? 'Pause' : 'Play'}${
-          isDarkMode ? '_hl' : ''
-        }@2x.png`)}
-        data-name="togglePlay"
-        className="cell-play--normal"
-        width="20"
-        alt="play"
-      />
-      <img
-        src={require(`resources/cell${
-          isPlaying && row.id === currentSongId ? 'Pause' : 'Play'
-        }_hover@2x.png`)}
-        data-name="togglePlay"
-        className="cell-play--hover"
-        width="20"
-        alt="play"
-      />
-    </span>
-  )
-
-  const CellLove = (
-    <span className="cell-love">
-      <img
-        src={require('resources/cellLoveUnselected_hl@2x.png')}
-        data-name="toggleLove"
-        className="cell-love--normal"
-        width="20"
-        alt="love"
-      />
-      <img
-        src={require('resources/cellLoveUnselected_hover@2x.png')}
-        data-name="toggleLove"
-        className="cell-love--hover"
-        width="20"
-        alt="love"
-      />
-      {/* <img
-        src={require('resources/cellLove_selected@2x.png')}
-        className="cell-love--selected"
-        width="20"
-        alt="love"
-      /> */}
-    </span>
-  )
-
-  const CellDownload = (
-    <span className="cell-download">
-      <img
-        src={require('resources/cellDownload_hl@2x.png')}
-        data-name="download"
-        className="cell-download--normal"
-        width="20"
-        alt=""
-      />
-      <img
-        src={require('resources/cellDownload_hover@2x.png')}
-        data-name="download"
-        className="cell-download--hover"
-        width="20"
-        alt=""
-      />
-      {/* <img
-        src={require('resources/cellDownloadOK_hl@2x.png')}
-        className="cell-downloadok"
-        width="20"
-        alt=""
-      />
-      <img
-        src={require('resources/cellDownloadOK_hover@2x.png')}
-        className="cell-downloadok--hover"
-        width="20"
-        alt=""
-      /> */}
-    </span>
-  )
-  const Menu = (
-    <span className="cell-menu">
-      <img
-        src={require('resources/normalMenu.png')}
-        data-name="menu"
-        className="cell-menu--normal"
-        width="16"
-        alt="menu"
-      />
-      <img
-        src={require('resources/normalMenu_hover.png')}
-        data-name="menu"
-        className="cell-menu--hover"
-        width="16"
-        alt="menu"
-      />
-    </span>
   )
 
   const columns: ColumnProps<SongDetail>[] = [
@@ -163,12 +43,7 @@ const SonglistTable: React.FC<Props> = props => {
               {data.mv.vid ? mvTag : null}
               {currentSongId === data.id && isPlaying && <SongWave />}
             </span>
-            <span className="controls" onClick={e => onControl(data, e)}>
-              {CellPlay(data)}
-              {CellLove}
-              {CellDownload}
-              {Menu}
-            </span>
+            <SongControl songDetail={data} togglePlay={props.togglePlay}></SongControl>
           </div>
         </div>
       )

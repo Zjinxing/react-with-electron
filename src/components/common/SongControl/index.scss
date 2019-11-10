@@ -1,0 +1,78 @@
+.song-controls {
+  display: none;
+  width: 80px;
+  margin-right: 10px;
+  cursor: pointer;
+  .cell-play {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    img {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    &--hover {
+      visibility: hidden;
+    }
+    &:hover {
+      .cell-play--hover {
+        visibility: visible;
+      }
+    }
+  }
+  .cell-love {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    img {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    &--hover {
+      visibility: hidden;
+    }
+    &:hover {
+      .cell-love--hover {
+        visibility: visible;
+      }
+    }
+  }
+  .cell-download {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    img {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    &--hover {
+      visibility: hidden;
+    }
+    &:hover {
+      .cell-download--hover {
+        visibility: visible;
+      }
+    }
+  }
+  .cell-menu {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    img {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+    }
+    &--hover {
+      visibility: hidden;
+    }
+    &:hover {
+      .cell-menu--hover {
+        visibility: visible;
+      }
+    }
+  }
+}
