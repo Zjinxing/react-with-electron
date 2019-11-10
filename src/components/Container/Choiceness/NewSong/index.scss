@@ -96,26 +96,59 @@
       overflow: hidden;
       padding: 0;
       &-wrapper {
+        display: flex;
         flex-shrink: 0;
         width: 400%;
         height: 100%;
         transition: all 0.5s linear;
         &-page {
           flex-shrink: 0;
-          display: inline-grid;
+          display: grid;
           grid-template-rows: repeat(3, 33.33%);
           grid-template-columns: repeat(3, 33.33%);
           width: 25%;
           height: 100%;
           margin: 0;
-          padding: 0;
+          padding: 10px;
           margin: 0;
+          // border: 1px dashed #f00;
           &-song {
             display: flex;
             align-items: center;
             box-sizing: border-box;
-            padding: 0 10px;
-            border: 1px solid #f09;
+            padding: 0 5px;
+            &:hover {
+              .song-controls {
+                display: flex;
+              }
+            }
+            .song-info {
+              width: 180px;
+              margin-left: 5px;
+              box-sizing: border-box;
+              &__name {
+                display: flex;
+                align-items: center;
+                width: 100%;
+                span:first-child {
+                  max-width: 90px;
+                  margin: 0 5px 0 0;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  white-space: nowrap;
+                }
+              }
+              &__singer {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                &-name {
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  white-space: nowrap;
+                }
+              }
+            }
             img {
               flex-shrink: 0;
             }
