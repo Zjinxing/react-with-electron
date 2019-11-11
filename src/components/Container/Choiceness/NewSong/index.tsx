@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react'
 import { Lan, NewSongDetail } from 'request/types/Recommend'
 import { SongDetail } from 'request/types/Playlist'
 import SongControl from 'components/common/SongControl'
+import SongWave from 'components/common/SongWave'
 import './index.scss'
 import { AppContext, State } from 'Store'
 import { GET_MUSIC_VKEY } from 'request/GetSongList'
@@ -15,7 +16,7 @@ interface Props {
 }
 
 const NewSong: React.FC<Props> = props => {
-  const { currentSongId, isPlaying, setData } = useContext(AppContext) as State
+  const { currentSongId, isPlaying, setData, isDarkMode } = useContext(AppContext) as State
   const [posClassName, SetPosClassName] = useState('page0')
 
   const slideRight = () => {
@@ -51,7 +52,22 @@ const NewSong: React.FC<Props> = props => {
     }
   }
 
-  const sqTag = <img src={require('resources/cell_sq.png')} className="tag" width="26" alt="sq" />
+  const playAll = async () => {
+    const songlist = props.newsong.songlist
+    const willPlaySong = await GET_MUSIC_VKEY({ songmid: songlist[0].mid })
+    const { name, singer } = songlist[0]
+    const singerName = singer && singer.map(item => item.name).join('/')
+    setData({
+      currentSongId: songlist[0].id,
+      playlist: songlist,
+      currentSongUrl: willPlaySong.response.playLists[0],
+      currentSongName: `${name} - ${singerName}`
+    })
+  }
+
+  const sqTag = (
+    <img src={require('resources/cell_sq.png')} className="tag sq" width="26" alt="sq" />
+  )
   const mvTag = (
     <img src={require('resources/cell_mv.png')} className="tag mv" width="26" alt="mv" />
   )
@@ -72,6 +88,7 @@ const NewSong: React.FC<Props> = props => {
           {data.file.size_ape || data.file.size_flac ? sqTag : null}
           {data.isonly ? onlyTag : null}
           {data.mv.vid ? mvTag : null}
+          {currentSongId === data.id && isPlaying && <SongWave />}
         </div>
         <div className="song-info__singer">
           <span className="song-info__singer-name">
@@ -97,7 +114,16 @@ const NewSong: React.FC<Props> = props => {
       </div>
       <div className="newsong-body">
         <div className="newsong-body-control">
-          <span>播放全部</span>
+          <span className="newsong-body-control-playAll" onClick={playAll}>
+            <span className="playall-icon">
+              <img
+                src={require(`resources/cellPlay${isDarkMode ? '_hl' : ''}@2x.png`)}
+                width="24"
+                alt="播放全部"
+              />
+            </span>
+            播放全部
+          </span>
           <span className="newsong-body-control__slide">
             <span className="newsong-body-control__slide-left" onClick={slideLeft}></span>
             <span className="newsong-body-control__slide-right" onClick={slideRight}></span>
