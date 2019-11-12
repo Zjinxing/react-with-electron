@@ -20,13 +20,12 @@ const AppContainer: React.FC = () => {
         'AppleInterfaceThemeChangedNotification',
         function theThemeHasChanged() {
           setData({ isDarkMode: sysDarkMode() })
-          // isDarkMode = systemPreferences.isDarkMode()
         }
       )
       const recommend = await GET_RECOMMEND()
       setData({ recommend })
     })()
-  }, [setData])
+  }, [])
   return (
     <div className={`App ${isDarkMode ? 'dark' : ''}`}>
       <Header />
