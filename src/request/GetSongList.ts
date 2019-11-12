@@ -2,6 +2,7 @@ import instance from './Http'
 import { Playlist, SonglistDetail } from './types/Playlist'
 import { MusicVkey } from './types/MusicVkey'
 import { SongListComments } from './types/Comments'
+import { NewSong } from './types/Recommend'
 
 export const GET_OFFICIAL_SONGLIST = async () => {
   const result = await instance.get(
@@ -54,4 +55,37 @@ export const GET_SONGLIST_COMMENTS = async (params: {
     params: { ...common, ...params }
   })
   return (result as any) as SongListComments
+}
+
+export const GET_NEWSONG_BY_TYPE = async (params: { type: number }) => {
+  const data = {
+    comm: { ct: 24 },
+    new_song: {
+      module: 'newsong.NewSongServer',
+      method: 'get_new_song_info',
+      param: { type: params.type }
+    }
+  }
+  const param = {
+    '-': '0',
+    g_tk: 5381,
+    loginUin: 0,
+    hostUin: 0,
+    format: 'json',
+    inCharset: 'utf8',
+    outCharset: 'utf-8',
+    notice: 0,
+    platform: 'yqq.json',
+    needNewCode: 0,
+    data
+  }
+  console.log(param)
+  const result = await instance.get('https://u.y.qq.com/cgi-bin/musicu.fcg?', {
+    params: param
+  })
+  return (result as any) as {
+    new_song: NewSong
+    code: number
+    ts: number
+  }
 }

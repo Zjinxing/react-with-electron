@@ -5,13 +5,16 @@ import SongControl from 'components/common/SongControl'
 import SongWave from 'components/common/SongWave'
 import './index.scss'
 import { AppContext, State } from 'Store'
-import { GET_MUSIC_VKEY } from 'request/GetSongList'
+import { GET_MUSIC_VKEY, GET_NEWSONG_BY_TYPE } from 'request/GetSongList'
 
 interface Props {
+  getNewSong: (type: number) => Promise<void>
   newsong: {
     lan: string
     lanlist: Lan[]
     songlist: NewSongDetail[]
+    type: number
+    ret_msg: string
   }
 }
 
@@ -65,6 +68,10 @@ const NewSong: React.FC<Props> = props => {
     })
   }
 
+  const getNewSong = async (type: number) => {
+    await props.getNewSong(type)
+  }
+
   const sqTag = (
     <img src={require('resources/cell_sq.png')} className="tag sq" width="26" alt="sq" />
   )
@@ -106,7 +113,11 @@ const NewSong: React.FC<Props> = props => {
         <h4 className="title">新歌速递</h4>
         <ul className="newsong-tags">
           {props.newsong.lanlist.map(item => (
-            <li className="newsong-tag" key={item.tjreport}>
+            <li
+              className={`newsong-tag ${props.newsong.lan === item.lan ? 'current-tag' : ''}`}
+              key={item.tjreport}
+              onClick={() => getNewSong(item.type)}
+            >
               {item.lan}
             </li>
           ))}

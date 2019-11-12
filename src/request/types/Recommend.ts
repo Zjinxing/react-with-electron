@@ -63,6 +63,18 @@ export interface NewSongDetail extends SongDetailCommon {
   album: NewSongAlbum
 }
 
+export interface NewSongData {
+  lan: string
+  lanlist: Lan[]
+  ret_msg: string
+  songlist: NewSongDetail[]
+  type: number
+}
+export interface NewSong {
+  code: number
+  data: NewSongData
+}
+
 export default interface Recommend {
   response: {
     category: any
@@ -77,16 +89,7 @@ export default interface Recommend {
     }
     new_album: any
     new_album_tag: any
-    new_song: {
-      code: number
-      data: {
-        lan: string
-        lanlist: Lan[]
-        ret_msg: string
-        songlist: NewSongDetail[]
-        type: number
-      }
-    }
+    new_song: NewSong
     playlist: any
     recomPlaylist: {
       code: number
