@@ -75,6 +75,106 @@ export interface NewSong {
   data: NewSongData
 }
 
+interface Company {
+  ex: {
+    company_photo: number
+    desc: string
+  }
+  id: number
+  name: string
+}
+
+export interface AlbumSinger {
+  area: number
+  birthday: string
+  company: Company
+  ex: {
+    desc: string
+    ex_identity: number
+    ex_status: number
+    info_name: string
+    name_spell: string
+    tag: string
+    wiki: string
+  }
+  foreign_name: string
+  genre: number
+  grade: number
+  id: number
+  identity: number
+  instrument: number
+  mid: string
+  name: string
+  opt_grade: number
+  opt_grade_new: number
+  origin: number
+  photo: {
+    big_photo_flag: string
+    has_photo: number
+    magic_rgb: number
+    photo_cnt: number
+    pic1_flag: number
+    pic2_flag: number
+    pic_mid: string
+  }
+  status: number
+  type: number
+}
+
+export interface AlbumDetail {
+  area: number
+  company: Company
+  companyshow: Company
+  ex: {
+    album_tag3: 0
+    album_tag5: string
+    desc: string
+    playable_track_num: number
+    singer_tag: string
+    track_nums: number
+    ex_status: number
+    genre: number
+    id: number
+    index: string
+    language: number
+    mid: string
+    modify_time: string
+    movie: string
+    name: string
+    pay: {
+      payment_album_type: number
+      payment_beg: string
+      payment_discount: number
+      payment_discount_beg: number
+      payment_discount_end: number
+      payment_end: string
+      payment_total: number
+      pre_sale_beg: string
+    }
+    photo: {
+      gaus_pic: string
+      has_photo: number
+      pay_flag: number
+      pic_mid: string
+      version: number
+      vip_flag: number
+    }
+    release_time: string
+    show_cow_new: number
+    singers: AlbumSinger[]
+    status: number
+    tag: string
+    tmetags: string
+    trans_name: string
+    type: number
+  }
+}
+
+export interface AlbumTag {
+  id: number
+  name: string
+  tjreport: string
+}
 export default interface Recommend {
   response: {
     category: any
@@ -87,8 +187,20 @@ export default interface Recommend {
         title: string
       }
     }
-    new_album: any
-    new_album_tag: any
+    new_album: {
+      code: number
+      data: {
+        total: number
+        ret_msg: string
+        albums: AlbumDetail[]
+      }
+    }
+    new_album_tag: {
+      code: number
+      data: {
+        area: AlbumTag[]
+      }
+    }
     new_song: NewSong
     playlist: any
     recomPlaylist: {
