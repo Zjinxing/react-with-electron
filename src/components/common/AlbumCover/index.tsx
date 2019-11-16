@@ -8,13 +8,13 @@ interface Props {
   children?: ReactNode
 }
 
-const PlaylistCover: React.FC<Props> = props => {
+const AlbumCover: React.FC<Props> = props => {
   const history = useHistory()
 
   const handleClick = () => {
     const path = {
-      pathname: '/songlist-detail',
-      state: props.albumInfo.id
+      pathname: '/album-detail',
+      state: props.albumInfo.mid
     }
     history.push(path)
   }
@@ -53,10 +53,15 @@ const PlaylistCover: React.FC<Props> = props => {
           /> */}
           </span>
         </div>
-        <div className="cover-img">{props.albumInfo.name}</div>
+        <div className="list-item__names">
+          <span className="list-item__names--album">{props.albumInfo.name}</span>
+          <span className="list-item__names--singer">
+            {props.albumInfo.singers.map(singer => singer.name).join(' / ')}
+          </span>
+        </div>
       </li>
     </>
   )
 }
 
-export default PlaylistCover
+export default AlbumCover
