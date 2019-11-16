@@ -2,17 +2,25 @@ import React, { useContext } from 'react'
 import { AppContext, State } from 'Store'
 import { SongDetail } from 'request/types/Playlist'
 import { NewSongDetail } from 'request/types/Recommend'
+import { SingerBase } from 'request/types/Album'
 import './index.scss'
 
+export interface SongInfo {
+  id: number
+  mid: string
+  name: string
+  singer: SingerBase[]
+  [key: string]: any
+}
 interface Props {
-  songDetail: SongDetail
-  togglePlay: (param: SongDetail) => Promise<void>
+  songDetail: SongInfo
+  togglePlay: (param: SongInfo) => Promise<void>
 }
 
 const SongControl: React.FC<Props> = props => {
-  const { isDarkMode, isPlaying, currentSongId } = useContext(AppContext) as State
+  const { isDarkMode, isPlaying, currentSongmid } = useContext(AppContext) as State
 
-  const onControl = async (row: SongDetail, e: React.SyntheticEvent<EventTarget>) => {
+  const onControl = async (row: SongInfo, e: React.SyntheticEvent<EventTarget>) => {
     const { target } = e
     if (!(target instanceof HTMLImageElement)) return
     const { dataset } = target
@@ -36,10 +44,10 @@ const SongControl: React.FC<Props> = props => {
     }
   }
 
-  const CellPlay = (data: SongDetail | NewSongDetail) => (
+  const CellPlay = (data: SongInfo | NewSongDetail) => (
     <span className="cell-play">
       <img
-        src={require(`resources/cell${isPlaying && data.id === currentSongId ? 'Pause' : 'Play'}${
+        src={require(`resources/cell${isPlaying && data.mid === currentSongmid ? 'Pause' : 'Play'}${
           isDarkMode ? '_hl' : ''
         }@2x.png`)}
         data-name="togglePlay"
@@ -49,7 +57,7 @@ const SongControl: React.FC<Props> = props => {
       />
       <img
         src={require(`resources/cell${
-          isPlaying && data.id === currentSongId ? 'Pause' : 'Play'
+          isPlaying && data.mid === currentSongmid ? 'Pause' : 'Play'
         }_hover@2x.png`)}
         data-name="togglePlay"
         className="cell-play--hover"

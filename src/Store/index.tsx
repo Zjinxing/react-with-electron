@@ -13,7 +13,7 @@ export interface State {
   isDarkMode: boolean
   recommend: Recommend
   currentSonglistId: string // 当前歌单Id
-  currentSongId: number // 当前正在播放歌曲Id
+  currentSongmid: string // 当前正在播放歌曲mid
   currentRadioId: string // 当前播放电台Id
   currentSongUrl: string // 当前播放歌曲地址
   currentSongName: string // 当前播放歌曲的名称
@@ -46,7 +46,7 @@ export default ({ children }: any) => {
     isDarkMode: isDarkMode(),
     recommend: {},
     currentSonglistId: '',
-    currentSongId: 0,
+    currentSongmid: '',
     currentRadioId: '',
     currentSongUrl: '',
     currentSongName: '',

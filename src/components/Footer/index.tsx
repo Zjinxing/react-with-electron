@@ -10,7 +10,7 @@ const Footer: React.FC = () => {
   const {
     isDarkMode,
     currentSongUrl,
-    currentSongId,
+    currentSongmid,
     currentSongName,
     playlist,
     playMode,
@@ -35,7 +35,7 @@ const Footer: React.FC = () => {
 
   // 检测到当前播放状态变化
   useEffect(() => {
-    const currentSong = playlist.find(item => item.id === currentSongId)
+    const currentSong = playlist.find(item => item.mid === currentSongmid)
     const { album, name, singer } = currentSong || {}
     album &&
       setAlbumCover(
@@ -44,23 +44,23 @@ const Footer: React.FC = () => {
     const singerName = singer && singer.map(item => item.name).join('/')
     name && setData({ currentSongName: `${name} - ${singerName}` })
     isPlaying ? audioRef.current!.play() : audioRef.current!.pause()
-  }, [isPlaying, currentSongId])
+  }, [isPlaying, currentSongmid])
 
   const playNext = async () => {
     setData({ isPlaying: false })
-    const currentIndex = playlist.findIndex(item => item.id === currentSongId)
+    const currentIndex = playlist.findIndex(item => item.mid === currentSongmid)
     if (playMode === 'singleLoop' || playMode === 'loop') {
       if (currentIndex === playlist.length) {
         const currentSong = await GET_MUSIC_VKEY({ songmid: playlist[0].mid })
         setData({
           currentSongUrl: currentSong.response.playLists[0],
-          currentSongId: playlist[0].id
+          currentSongmid: playlist[0].mid
         })
       } else {
         const currentSong = await GET_MUSIC_VKEY({ songmid: playlist[currentIndex + 1].mid })
         setData({
           currentSongUrl: currentSong.response.playLists[0],
-          currentSongId: playlist[currentIndex + 1].id
+          currentSongmid: playlist[currentIndex + 1].mid
         })
       }
     } else {
@@ -70,19 +70,19 @@ const Footer: React.FC = () => {
 
   const playPreview = async () => {
     setData({ isPlaying: false })
-    const currentIndex = playlist.findIndex(item => item.id === currentSongId)
+    const currentIndex = playlist.findIndex(item => item.mid === currentSongmid)
     if (playMode === 'singleLoop' || playMode === 'loop') {
       if (currentIndex === 0) {
         const currentSong = await GET_MUSIC_VKEY({ songmid: playlist[playlist.length - 1].mid })
         setData({
           currentSongUrl: currentSong.response.playLists[0],
-          currentSongId: playlist[playlist.length - 1].id
+          currentSongmid: playlist[playlist.length - 1].id
         })
       } else {
         const currentSong = await GET_MUSIC_VKEY({ songmid: playlist[currentIndex - 1].mid })
         setData({
           currentSongUrl: currentSong.response.playLists[0],
-          currentSongId: playlist[currentIndex - 1].id
+          currentSongmid: playlist[currentIndex - 1].id
         })
       }
     } else {
@@ -96,7 +96,7 @@ const Footer: React.FC = () => {
     const willPlaySong = await GET_MUSIC_VKEY({ songmid: playlist[randomIndex].mid })
     setData({
       currentSongUrl: willPlaySong.response.playLists[0],
-      currentSongId: playlist[randomIndex].id
+      currentSongmid: playlist[randomIndex].id
     })
   }
 

@@ -5,7 +5,7 @@ import { GET_ALBUM } from 'request/Album'
 import { AlbumSongDetail } from 'request/types/Album'
 import { formatSeconds } from 'utils'
 import SongDesc, { Description } from 'components/common/SongDesc'
-import SongControl from 'components/common/SongControl'
+import SongControl, { SongInfo } from 'components/common/SongControl'
 import SongWave from 'components/common/SongWave'
 import './index.scss'
 
@@ -43,6 +43,7 @@ const AlbumDetail: React.FC<RouteComponentProps> = props => {
     AlubmDesc = <SongDesc description={albuminfo} playAll={playAll} />
   }
   const SingleSong = (songData: AlbumSongDetail, index: number) => {
+    // const { id } = songData
     return (
       <li className="album-single-song" key={songData.songmid}>
         <div className="album-single-song--name">

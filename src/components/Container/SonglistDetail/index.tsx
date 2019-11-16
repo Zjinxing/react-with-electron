@@ -9,10 +9,11 @@ import SonglistTable from 'components/common/Songlist'
 import MyButton from 'components/common/MyButton'
 import SongDesc from 'components/common/SongDesc'
 import { AppContext, State } from 'Store'
+import { SongInfo } from 'components/common/SongControl'
 import './index.scss'
 
 const SonglistDetailFC: React.FC<RouteComponentProps> = props => {
-  const { isDarkMode, setData, currentSongId, isPlaying } = useContext(AppContext) as State
+  const { isDarkMode, setData, currentSongmid, isPlaying } = useContext(AppContext) as State
   const [songlistDetail, setSonglistDetail] = useState<SonglistDetail>()
   const [commentList, setCommentList] = useState<SongListComments>()
   const [headerClass, setHeaderClass] = useState('')
@@ -32,8 +33,8 @@ const SonglistDetailFC: React.FC<RouteComponentProps> = props => {
     console.log(tag)
   }
 
-  const togglePlay = async (row: SongDetail) => {
-    if (row.id === currentSongId) {
+  const togglePlay = async (row: SongInfo) => {
+    if (row.mid === currentSongmid) {
       setData({ isPlaying: !isPlaying })
     } else {
       const result = await GET_MUSIC_VKEY({ songmid: row.mid })
@@ -41,7 +42,7 @@ const SonglistDetailFC: React.FC<RouteComponentProps> = props => {
       const { name, singer } = row
       const singerName = singer && singer.map(item => item.name).join('/')
       setData({
-        currentSongId: row.id,
+        currentSongmid: row.mid,
         playlist: playlist,
         currentSongUrl: result.response.playLists[0],
         currentSongName: `${name} - ${singerName}`
@@ -58,7 +59,7 @@ const SonglistDetailFC: React.FC<RouteComponentProps> = props => {
       const { name, singer } = songlist[0]
       const singerName = singer && singer.map(item => item.name).join('/')
       setData({
-        currentSongId: songlist[0].id,
+        currentSongmid: songlist[0].mid,
         playlist: songlist,
         currentSongUrl: willPlaySong.response.playLists[0],
         currentSongName: `${name} - ${singerName}`

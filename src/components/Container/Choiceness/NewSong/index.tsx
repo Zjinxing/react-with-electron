@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react'
 import { Lan, NewSongDetail } from 'request/types/Recommend'
 import { SongDetail } from 'request/types/Playlist'
-import SongControl from 'components/common/SongControl'
+import SongControl, { SongInfo } from 'components/common/SongControl'
 import SongWave from 'components/common/SongWave'
 import './index.scss'
 import { AppContext, State } from 'Store'
@@ -19,7 +19,7 @@ interface Props {
 }
 
 const NewSong: React.FC<Props> = props => {
-  const { currentSongId, isPlaying, setData, isDarkMode } = useContext(AppContext) as State
+  const { currentSongmid, isPlaying, setData, isDarkMode } = useContext(AppContext) as State
   const [posClassName, SetPosClassName] = useState('page0')
 
   const slideRight = () => {
@@ -38,8 +38,8 @@ const NewSong: React.FC<Props> = props => {
     }
   }
 
-  const togglePlay = async (data: SongDetail) => {
-    if (data.id === currentSongId) {
+  const togglePlay = async (data: SongInfo) => {
+    if (data.mid === currentSongmid) {
       setData({ isPlaying: !isPlaying })
     } else {
       const result = await GET_MUSIC_VKEY({ songmid: data.mid })
@@ -47,7 +47,7 @@ const NewSong: React.FC<Props> = props => {
       const { name, singer } = data
       const singerName = singer && singer.map(item => item.name).join('/')
       setData({
-        currentSongId: data.id,
+        currentSongmid: data.mid,
         playlist: playlist,
         currentSongUrl: result.response.playLists[0],
         currentSongName: `${name} - ${singerName}`
@@ -61,7 +61,7 @@ const NewSong: React.FC<Props> = props => {
     const { name, singer } = songlist[0]
     const singerName = singer && singer.map(item => item.name).join('/')
     setData({
-      currentSongId: songlist[0].id,
+      currentSongmid: songlist[0].mid,
       playlist: songlist,
       currentSongUrl: willPlaySong.response.playLists[0],
       currentSongName: `${name} - ${singerName}`
@@ -95,7 +95,7 @@ const NewSong: React.FC<Props> = props => {
           {data.file.size_ape || data.file.size_flac ? sqTag : null}
           {data.isonly ? onlyTag : null}
           {data.mv.vid ? mvTag : null}
-          {currentSongId === data.id && isPlaying && <SongWave />}
+          {currentSongmid === data.mid && isPlaying && <SongWave />}
         </div>
         <div className="song-info__singer">
           <span className="song-info__singer-name">

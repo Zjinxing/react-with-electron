@@ -5,17 +5,17 @@ import { ColumnProps } from 'antd/lib/table'
 import { formatSeconds } from 'utils'
 import { AppContext, State } from 'Store'
 import SongWave from '../SongWave'
-import SongControl from '../SongControl'
+import SongControl, { SongInfo } from '../SongControl'
 import './index.scss'
 
 interface Props {
   songTableData: SongDetail[]
-  togglePlay: (param: SongDetail) => Promise<void>
+  togglePlay: (param: SongInfo) => Promise<void>
   children?: ReactNode
 }
 
 const SonglistTable: React.FC<Props> = props => {
-  const { isDarkMode, isPlaying, currentSongId } = useContext(AppContext) as State
+  const { isDarkMode, isPlaying, currentSongmid } = useContext(AppContext) as State
 
   const sqTag = <img src={require('resources/cell_sq.png')} className="tag" width="26" alt="sq" />
   const mvTag = (
@@ -41,7 +41,7 @@ const SonglistTable: React.FC<Props> = props => {
               {data.isonly ? onlyTag : null}
               {/* TODO, mv 点击打开新窗口 */}
               {data.mv.vid ? mvTag : null}
-              {currentSongId === data.id && isPlaying && <SongWave />}
+              {currentSongmid === data.mid && isPlaying && <SongWave />}
             </span>
             <SongControl songDetail={data} togglePlay={props.togglePlay}></SongControl>
           </div>
