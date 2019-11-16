@@ -132,42 +132,42 @@ export interface AlbumDetail {
     playable_track_num: number
     singer_tag: string
     track_nums: number
-    ex_status: number
-    genre: number
-    id: number
-    index: string
-    language: number
-    mid: string
-    modify_time: string
-    movie: string
-    name: string
-    pay: {
-      payment_album_type: number
-      payment_beg: string
-      payment_discount: number
-      payment_discount_beg: number
-      payment_discount_end: number
-      payment_end: string
-      payment_total: number
-      pre_sale_beg: string
-    }
-    photo: {
-      gaus_pic: string
-      has_photo: number
-      pay_flag: number
-      pic_mid: string
-      version: number
-      vip_flag: number
-    }
-    release_time: string
-    show_cow_new: number
-    singers: AlbumSinger[]
-    status: number
-    tag: string
-    tmetags: string
-    trans_name: string
-    type: number
   }
+  ex_status: number
+  genre: number
+  id: number
+  index: string
+  language: number
+  mid: string
+  modify_time: string
+  movie: string
+  name: string
+  pay: {
+    payment_album_type: number
+    payment_beg: string
+    payment_discount: number
+    payment_discount_beg: number
+    payment_discount_end: number
+    payment_end: string
+    payment_total: number
+    pre_sale_beg: string
+  }
+  photo: {
+    gaus_pic: string
+    has_photo: number
+    pay_flag: number
+    pic_mid: string
+    version: number
+    vip_flag: number
+  }
+  release_time: string
+  show_cow_new: number
+  singers: AlbumSinger[]
+  status: number
+  tag: string
+  tmetags: string
+  trans_name: string
+  type: number
 }
 
 export interface AlbumTag {
