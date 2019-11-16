@@ -79,7 +79,6 @@ export const GET_NEWSONG_BY_TYPE = async (params: { type: number }) => {
     needNewCode: 0,
     data
   }
-  console.log(param)
   const result = await instance.get('https://u.y.qq.com/cgi-bin/musicu.fcg?', {
     params: param
   })
