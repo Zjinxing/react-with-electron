@@ -5,6 +5,7 @@ import Ranking from './Ranking'
 import Choiceness from './Choiceness'
 import SongList from './SongList'
 import SonglistDetail from './SonglistDetail'
+import AlbumDetail from './AlbumDetail'
 import Radio from './Radio'
 import MV from './MV'
 import Favor from './Favor'
@@ -36,6 +37,7 @@ const Container: React.FC = () => {
             <Route path="/download" component={Download}></Route>
             <Route path="/history" component={History}></Route>
             <Route path="/songlist-detail" component={SonglistDetail} />
+            <Route path="/album-detail" component={AlbumDetail} />
             <Route component={Choiceness}></Route>
           </Switch>
         </div>

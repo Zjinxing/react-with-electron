@@ -1,11 +1,12 @@
 // 专辑首发
 import React from 'react'
-import { AlbumTag } from 'request/types/Recommend'
+import { AlbumTag, AlbumDetail } from 'request/types/Recommend'
 import AlbumCover from 'components/common/AlbumCover'
 import './index.scss'
 
 interface Props {
   albumTags: AlbumTag[]
+  albums: AlbumDetail[]
 }
 
 const NewAlubm: React.FC<Props> = props => {
@@ -21,7 +22,13 @@ const NewAlubm: React.FC<Props> = props => {
           ))}
         </ul>
       </div>
-      <ul className="new-album-content"></ul>
+      <div className="new-album-content">
+        <ul className="new-album-content__list">
+          {props.albums.map(item => (
+            <AlbumCover albumInfo={item} key={item.id}></AlbumCover>
+          ))}
+        </ul>
+      </div>
     </div>
   )
 }
