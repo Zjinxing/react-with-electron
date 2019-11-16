@@ -1,0 +1,71 @@
+.song-desc {
+  display: flex;
+  background: #393939;
+  padding: 20px 20px 30px;
+  .cover {
+    min-width: 150px;
+    height: 150px;
+    margin-right: 25px;
+  }
+  .songlist-info {
+    font-size: PingFangSC-Regular, sans-serif;
+    &-title {
+      text-align: left;
+      margin-bottom: 10px;
+      font-size: 25px;
+      font-weight: bolder;
+    }
+    &-summary {
+      display: flex;
+      font-size: 13px;
+      align-items: center;
+      &--createtime {
+        color: #818181;
+        margin: 0 2px 0 10px;
+      }
+      &--tags {
+        display: flex;
+        margin: 0;
+        li {
+          background: #505050;
+          margin-right: 5px;
+          padding: 0 8px;
+          font-size: 13px;
+          border-radius: 12px;
+          cursor: pointer;
+          &:hover {
+            color: #3fc080;
+          }
+        }
+      }
+    }
+    &-desc {
+      position: relative;
+      height: 48px;
+      padding-right: 50px;
+      overflow: hidden;
+      padding-top: 5px;
+      line-height: 24px;
+      font-size: 12.5px;
+      text-align: left;
+      span {
+        color: #818181;
+      }
+      .unfold {
+        position: absolute;
+        right: 0;
+        bottom: -5px;
+        color: #fff;
+        cursor: pointer;
+        &:hover {
+          color: #3fc080;
+        }
+      }
+    }
+    &-control {
+      display: flex;
+      width: 530px;
+      justify-content: space-between;
+    }
+  }
+}
