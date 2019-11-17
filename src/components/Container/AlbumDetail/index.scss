@@ -49,6 +49,36 @@
       border-bottom: 1px solid #393939;
       &:hover {
         background: #303030;
+        .song-controls {
+          display: flex;
+        }
+      }
+      &--name {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        .cells {
+          display: flex;
+          flex: 1;
+          justify-content: space-between;
+          align-items: center;
+          .tags {
+            display: flex;
+            flex-wrap: nowrap;
+            margin-right: 20px;
+            .tag {
+              margin-left: 5px;
+            }
+            .mv:hover {
+              cursor: pointer;
+            }
+          }
+          &:hover {
+            .song-controls {
+              display: flex;
+            }
+          }
+        }
       }
     }
   }

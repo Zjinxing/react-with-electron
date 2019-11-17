@@ -76,13 +76,13 @@ const Footer: React.FC = () => {
         const currentSong = await GET_MUSIC_VKEY({ songmid: playlist[playlist.length - 1].mid })
         setData({
           currentSongUrl: currentSong.response.playLists[0],
-          currentSongmid: playlist[playlist.length - 1].id
+          currentSongmid: playlist[playlist.length - 1].mid
         })
       } else {
         const currentSong = await GET_MUSIC_VKEY({ songmid: playlist[currentIndex - 1].mid })
         setData({
           currentSongUrl: currentSong.response.playLists[0],
-          currentSongmid: playlist[currentIndex - 1].id
+          currentSongmid: playlist[currentIndex - 1].mid
         })
       }
     } else {

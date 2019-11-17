@@ -6,7 +6,7 @@ import { SingerBase } from 'request/types/Album'
 import './index.scss'
 
 export interface SongInfo {
-  id: number
+  id?: number
   mid: string
   name: string
   singer: SingerBase[]
