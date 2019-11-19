@@ -1,3 +1,5 @@
+import { AlbumDetail, AlbumTag } from './Recommend'
+
 export interface SingerBase {
   id: number
   mid: string
@@ -86,4 +88,21 @@ export interface AlbumInfo {
       total_song_num: number
     }
   }
+}
+
+export interface NewAlbum {
+  code: number
+  new_album: {
+    code: number
+    data: {
+      albums: AlbumDetail[]
+      ret_msg: string
+      total: number
+    }
+  }
+  new_album_tag: {
+    code: number
+    data: AlbumTag
+  }
+  ts: number
 }

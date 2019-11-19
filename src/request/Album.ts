@@ -2,7 +2,7 @@ import { AlbumInfo, NewAlbum } from './types/Album'
 import instance from './Http'
 import { commonConfig } from './config'
 
-type Area = 1 | 2 | 3 | 4 | 5 | 6
+export type Area = 1 | 2 | 3 | 4 | 5 | 6
 
 /**
  * 获取不同地区新专辑
