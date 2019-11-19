@@ -1,6 +1,6 @@
 import React, { createContext, useState } from 'react'
 import { remote } from 'electron'
-import Recommend from 'request/types/Recommend'
+import Recommend, { AlbumDetail } from 'request/types/Recommend'
 import { SongDetail } from 'request/types/Playlist'
 const { systemPreferences } = remote
 
@@ -18,6 +18,8 @@ export interface State {
   currentSongUrl: string // 当前播放歌曲地址
   currentSongName: string // 当前播放歌曲的名称
   playlist: SongDetail[] // 当前播放列表详情
+  albumList: AlbumDetail[] // 首页新专辑
+  albumArea: 1 | 2 | 3 | 4 | 5 | 6 // 当前专辑地区
   playMode: 'loop' | 'random' | 'singleLoop' // 播放模式
   isPlaying: boolean // 是否正在播放
   setData: (data: { [key: string]: any }) => void
@@ -52,6 +54,8 @@ export default ({ children }: any) => {
     currentSongName: '',
     playMode: 'loop',
     playlist: [],
+    albumList: [],
+    albumArea: 1,
     isPlaying: false,
     setData,
     addState

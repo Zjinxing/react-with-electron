@@ -6,6 +6,7 @@ import Header from './components/Header'
 import Footer from './components/Footer'
 import Container from './components/Container'
 import ContextProvider, { AppContext, State } from './Store'
+import { GET_NEW_ALBUMS } from 'request/Album'
 
 const { systemPreferences } = remote
 
@@ -22,8 +23,9 @@ const AppContainer: React.FC = () => {
           setData({ isDarkMode: sysDarkMode() })
         }
       )
-      const recommend = await GET_RECOMMEND()
-      setData({ recommend })
+      const [recommend, newAlbums] = await Promise.all([GET_RECOMMEND(), GET_NEW_ALBUMS(1)])
+      const albumList = !newAlbums.code && newAlbums.new_album.data.albums
+      setData({ recommend, albumList, albumArea: 1 })
     })()
   }, [])
   return (
