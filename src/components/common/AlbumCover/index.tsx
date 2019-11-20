@@ -27,7 +27,7 @@ const AlbumCover: React.FC<Props> = props => {
 
   return (
     <>
-      <li className="list-item" onClick={handleClick}>
+      <li className="album-list-item" onClick={handleClick}>
         <div className="img-wrapper">
           <img
             src={`https://y.gtimg.cn/music/photo_new/T002R800x800M000${props.albumInfo.mid}.jpg?max_age=2592000`}
