@@ -7,6 +7,7 @@ import Footer from './components/Footer'
 import Container from './components/Container'
 import ContextProvider, { AppContext, State } from './Store'
 import { GET_NEW_ALBUMS } from 'request/Album'
+import { GET_SINGER } from 'request/Singer'
 
 const { systemPreferences } = remote
 
@@ -23,9 +24,14 @@ const AppContainer: React.FC = () => {
           setData({ isDarkMode: sysDarkMode() })
         }
       )
-      const [recommend, newAlbums] = await Promise.all([GET_RECOMMEND(), GET_NEW_ALBUMS(1)])
+      const [recommend, newAlbums, hotsingers] = await Promise.all([
+        GET_RECOMMEND(),
+        GET_NEW_ALBUMS(1),
+        GET_SINGER({ area: -100, genre: -100, sex: -100, index: -100 })
+      ])
       const albumList = !newAlbums.code && newAlbums.new_album.data.albums
-      setData({ recommend, albumList, albumArea: 1 })
+      const hotsingerList = !hotsingers.code && hotsingers.singerList.data.singerlist
+      setData({ recommend, albumList, albumArea: 1, hotSinger: hotsingerList })
     })()
   }, [])
   return (

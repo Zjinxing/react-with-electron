@@ -2,6 +2,7 @@ import React, { createContext, useState } from 'react'
 import { remote } from 'electron'
 import Recommend, { AlbumDetail } from 'request/types/Recommend'
 import { SongDetail } from 'request/types/Playlist'
+import { HotSinger } from 'request/types/HotSinger'
 const { systemPreferences } = remote
 
 export const AppContext = createContext({})
@@ -22,6 +23,7 @@ export interface State {
   albumArea: 1 | 2 | 3 | 4 | 5 | 6 // 当前专辑地区
   playMode: 'loop' | 'random' | 'singleLoop' // 播放模式
   isPlaying: boolean // 是否正在播放
+  hotSinger: HotSinger[]
   setData: (data: { [key: string]: any }) => void
   addState: () => void
   [propName: string]: any
@@ -56,6 +58,7 @@ export default ({ children }: any) => {
     playlist: [],
     albumList: [],
     albumArea: 1,
+    hotSinger: [],
     isPlaying: false,
     setData,
     addState

@@ -8,9 +8,10 @@ import OfficialSonglist from './OfficialSonglist' // 官方歌单
 import HipsterSonglist from './HipsterSonglist' // 达人歌单
 import NewSong from './NewSong' // 新歌速递
 import NewAlbum from './NewAlbum' // 专辑首发
+import HotSinger from './HotSinger'
 
 const Choiceness: React.FC = () => {
-  const { recommend, albumList, setData } = useContext(AppContext) as State
+  const { recommend, albumList, hotSinger, setData } = useContext(AppContext) as State
   const [newSong, setNewSong] = useState<NewSongData>()
 
   enum NewSongType {
@@ -72,6 +73,7 @@ const Choiceness: React.FC = () => {
           toggleAlbumArea={getNewAlbum}
         ></NewAlbum>
       )}
+      {hotSinger && <HotSinger hotSinger={hotSinger}></HotSinger>}
     </div>
   )
 }
