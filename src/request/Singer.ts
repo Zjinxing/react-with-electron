@@ -1,5 +1,6 @@
 import instance from './Http'
 import { commonConfig } from './config'
+import { HotSingerRes } from './types/HotSinger'
 /**
  * 获取歌手列表
  * @param param0
@@ -27,5 +28,5 @@ export const GET_SINGER = async ({
   const result = await instance.get('https://u.y.qq.com/cgi-bin/musicu.fcg', {
     params: { ...commonConfig, data }
   })
-  return result
+  return (result as any) as HotSingerRes
 }
