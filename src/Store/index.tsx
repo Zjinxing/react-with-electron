@@ -2,7 +2,7 @@ import React, { createContext, useState } from 'react'
 import { remote } from 'electron'
 import Recommend, { AlbumDetail } from 'request/types/Recommend'
 import { SongDetail } from 'request/types/Playlist'
-import { HotSinger } from 'request/types/HotSinger'
+import { HotSinger } from 'request/types/Singer'
 const { systemPreferences } = remote
 
 export const AppContext = createContext({})

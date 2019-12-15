@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { AppContext, State } from 'Store'
 import Sider from './Sider'
 import Ranking from './Ranking'
 import Choiceness from './Choiceness'
@@ -13,7 +14,7 @@ import Local from './Local'
 import Download from './Download'
 import History from './History'
 import './index.scss'
-import { AppContext, State } from 'Store'
+import SingerDetail from './SingerDetail'
 
 const Container: React.FC = () => {
   const { recommend } = useContext(AppContext) as State
@@ -38,6 +39,7 @@ const Container: React.FC = () => {
             <Route path="/history" component={History}></Route>
             <Route path="/songlist-detail" component={SonglistDetail} />
             <Route path="/album-detail" component={AlbumDetail} />
+            <Route path="/singer-detail" component={SingerDetail} />
             <Route component={Choiceness}></Route>
           </Switch>
         </div>

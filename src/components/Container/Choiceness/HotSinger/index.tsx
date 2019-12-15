@@ -1,12 +1,21 @@
 import React from 'react'
 import './index.scss'
-import { HotSinger } from 'request/types/HotSinger'
+import { HotSinger } from 'request/types/Singer'
+import { useHistory } from 'react-router'
 
 interface Props {
   hotSinger: HotSinger[]
 }
 
 const Singer: React.FC<Props> = props => {
+  const history = useHistory()
+  const getSingerDesc = async (singermid: string) => {
+    const path = {
+      pathname: '/singer-detail',
+      state: singermid
+    }
+    history.push(path)
+  }
   return (
     <div className="hot-singer">
       <div className="hot-singer__header">
@@ -15,7 +24,11 @@ const Singer: React.FC<Props> = props => {
       </div>
       <ul className="hot-singer__list">
         {props.hotSinger.slice(0, 6).map(singer => (
-          <li className="hot-singer__list-item" key={singer.singer_id}>
+          <li
+            className="hot-singer__list-item"
+            key={singer.singer_id}
+            onClick={() => getSingerDesc(singer.singer_mid)}
+          >
             <img src={singer.singer_pic} width="100%" alt="" />
             <span>{singer.singer_name}</span>
           </li>
