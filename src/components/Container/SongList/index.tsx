@@ -1,7 +1,12 @@
-import React from 'react';
+import React from 'react'
+import './index.scss'
 
 const SongList: React.FC = () => {
-  return <div>歌单</div>;
-};
+  return (
+    <div className="playlist">
+      <webview className="webview" src="https://y.qq.com/musicmac/v6/playlist/index.html"></webview>
+    </div>
+  )
+}
 
-export default SongList;
+export default SongList

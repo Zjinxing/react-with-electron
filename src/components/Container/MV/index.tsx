@@ -1,7 +1,12 @@
-import React from 'react';
+import React from 'react'
+import './index.scss'
 
 const MV: React.FC = () => {
-  return <div>MV</div>;
-};
+  return (
+    <div className="mv">
+      <webview className="webview" src="https://y.qq.com/musicmac/v6/radio/index.html"></webview>
+    </div>
+  )
+}
 
-export default MV;
+export default MV

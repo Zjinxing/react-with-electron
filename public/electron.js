@@ -18,7 +18,8 @@ function createWindow() {
     titleBarStyle: 'hidden',
     webPreferences: {
       webSecurity: false,
-      nodeIntegration: true
+      nodeIntegration: true,
+      webviewTag: true
     }
   })
   win.loadURL(URL)
