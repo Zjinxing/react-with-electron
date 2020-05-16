@@ -6,14 +6,6 @@
   color: #fff;
   cursor: pointer;
 }
-
-.mybutton.dark-btn {
-  background: rgb(57, 57, 57);
-  &:hover {
-    background: rgb(69, 69, 69);
-  }
-}
-
 .primary {
   background: #3fc080;
   border: 1px solid #3fc080;
@@ -23,8 +15,16 @@
   }
 }
 
-.dark-btn.primary {
-  color: #3fc080;
+@media (prefers-color-scheme: dark) {
+  .mybutton {
+    background: rgb(57, 57, 57);
+    &:hover {
+      background: rgb(69, 69, 69);
+    }
+  }
+  .mybutton.primary {
+    color: #3fc080;
+  }
 }
 
 .mybutton.ghost {

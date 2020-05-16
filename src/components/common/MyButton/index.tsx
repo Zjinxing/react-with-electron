@@ -1,5 +1,4 @@
 import React, { ReactNode, useContext } from 'react'
-import { AppContext, State } from 'Store'
 import './index.scss'
 
 interface Props {
@@ -9,14 +8,10 @@ interface Props {
   onClick?: () => any
 }
 
-const MyButton: React.FC<Props> = props => {
-  const { isDarkMode } = useContext(AppContext) as State
-
+const MyButton: React.FC<Props> = (props) => {
   return (
     <button
-      className={`mybutton ${props.type} ${isDarkMode ? 'dark-btn' : ''} ${
-        props.ghost ? 'ghost' : ''
-      }`}
+      className={`mybutton ${props.type} ${props.ghost ? 'ghost' : ''}`}
       onClick={props.onClick}
     >
       {props.children}
