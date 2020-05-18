@@ -9,10 +9,10 @@ interface Props {
 
 const Singer: React.FC<Props> = props => {
   const history = useHistory()
-  const getSingerDesc = async (singermid: string) => {
+  const getSingerDesc = async (singermid: string, singerPic: string) => {
     const path = {
       pathname: '/singer-detail',
-      state: singermid
+      state: { singermid, singerPic },
     }
     history.push(path)
   }
@@ -27,7 +27,7 @@ const Singer: React.FC<Props> = props => {
           <li
             className="hot-singer__list-item"
             key={singer.singer_id}
-            onClick={() => getSingerDesc(singer.singer_mid)}
+            onClick={() => getSingerDesc(singer.singer_mid, singer.singer_pic)}
           >
             <img src={singer.singer_pic} width="100%" alt="" />
             <span>{singer.singer_name}</span>

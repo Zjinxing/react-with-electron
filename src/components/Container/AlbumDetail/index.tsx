@@ -23,8 +23,8 @@ const AlbumDetail: React.FC<RouteComponentProps> = props => {
     ;(async () => {
       const sessionAlbummid = sessionStorage.getItem('albummid')
       ;(!sessionAlbummid || sessionAlbummid === 'undefined') &&
-        sessionStorage.setItem('albummid', props.location.state)
-      const albummid = props.location.state || sessionAlbummid
+        sessionStorage.setItem('albummid', props.location.state as string)
+      const albummid = (props.location.state || sessionAlbummid) as string
       const result = await GET_ALBUM(albummid)
       const { data, code } = result.response
       setAlbumSonglist(data.list)
@@ -35,7 +35,7 @@ const AlbumDetail: React.FC<RouteComponentProps> = props => {
           creator: data.singername,
           createdAt: data.aDate,
           desc: data.desc,
-          tags: []
+          tags: [],
         })
     })()
   }, [])
@@ -45,7 +45,7 @@ const AlbumDetail: React.FC<RouteComponentProps> = props => {
     const param = {
       mid: firstSong!.songmid,
       name: firstSong!.songname,
-      singer: firstSong!.singer
+      singer: firstSong!.singer,
     }
     togglePlay(param)
   }
@@ -63,22 +63,22 @@ const AlbumDetail: React.FC<RouteComponentProps> = props => {
               value: item.songmid,
               writable: true,
               enumerable: true,
-              configurable: true
+              configurable: true,
             },
             name: {
               value: item.songname,
               enumerable: true,
               writable: true,
-              configurable: true
+              configurable: true,
             },
             album: {
               value: {
-                mid: item.albummid
+                mid: item.albummid,
               },
               writable: true,
               enumerable: true,
-              configurable: true
-            }
+              configurable: true,
+            },
           })
           return item
         })
@@ -89,7 +89,7 @@ const AlbumDetail: React.FC<RouteComponentProps> = props => {
         currentSongmid: song.mid,
         playlist: playlist,
         currentSongUrl: result.response.playLists[0],
-        currentSongName: `${name} - ${singerName}`
+        currentSongName: `${name} - ${singerName}`,
       })
     }
   }

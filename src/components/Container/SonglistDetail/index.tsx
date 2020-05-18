@@ -45,7 +45,7 @@ const SonglistDetailFC: React.FC<RouteComponentProps> = props => {
         currentSongmid: row.mid,
         playlist: playlist,
         currentSongUrl: result.response.playLists[0],
-        currentSongName: `${name} - ${singerName}`
+        currentSongName: `${name} - ${singerName}`,
       })
     }
   }
@@ -62,7 +62,7 @@ const SonglistDetailFC: React.FC<RouteComponentProps> = props => {
         currentSongmid: songlist[0].mid,
         playlist: songlist,
         currentSongUrl: willPlaySong.response.playLists[0],
-        currentSongName: `${name} - ${singerName}`
+        currentSongName: `${name} - ${singerName}`,
       })
     }
   }
@@ -70,14 +70,14 @@ const SonglistDetailFC: React.FC<RouteComponentProps> = props => {
   useEffect(() => {
     ;(async () => {
       const sessionDisstid = sessionStorage.getItem('disstid')
-      !sessionDisstid && sessionStorage.setItem('disstid', props.location.state)
-      const disstid = props.location.state || sessionDisstid
+      !sessionDisstid && sessionStorage.setItem('disstid', props.location.state as string)
+      const disstid = (props.location.state || sessionDisstid) as number
       const listDetail = await GET_SONGLIST_DETAIL({ disstid: disstid })
       if (listDetail.response.cdlist[0]) {
         const comments = await GET_SONGLIST_COMMENTS({
           topid: listDetail.response.cdlist[0].dissid,
           pagenum: 0,
-          pagesize: 25
+          pagesize: 25,
         })
         console.log(comments)
         setCommentList(comments)
@@ -120,7 +120,7 @@ const SonglistDetailFC: React.FC<RouteComponentProps> = props => {
       creator: cd.nickname,
       createdAt: dayjs(cd.ctime * 1000).format('YYYY-MM-DD'),
       desc: cd.desc,
-      tags: cd.tags
+      tags: cd.tags,
     }
     SonglistDesc = <SongDesc description={description} tagClick={tagClick} playAll={playAll} />
 
