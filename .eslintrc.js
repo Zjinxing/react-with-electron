@@ -1,3 +1,5 @@
+/** @format */
+
 module.exports = {
   extends: ['plugin:react/recommended'],
   rules: {
@@ -5,11 +7,12 @@ module.exports = {
       'error',
       {
         component: true,
-        html: true
-      }
-    ]
+        html: true,
+      },
+    ],
+    'eol-last': ['error', 'always'],
   },
   parserOptions: {
-    ecmaVersion: 6
-  }
+    ecmaVersion: 6,
+  },
 }
