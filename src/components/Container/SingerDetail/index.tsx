@@ -2,28 +2,43 @@ import React, { useEffect, useState } from 'react'
 import { RouteComponentProps } from 'react-router'
 import { GET_SINGER_DESC } from 'request/Singer'
 import MyButton from 'components/common/MyButton'
+import SingerSongList from './components/SingerSongList'
 import './index.scss'
 
 const SingerDetail: React.FC<RouteComponentProps> = props => {
   const [singerDesc, setSingerDesc] = useState('')
-  const [singerPic, setSingerPic] = useState('')
+  const [singer_pic, setSingerPic] = useState('')
   const [singerName, setSingerName] = useState('')
   const [basicInfo, setBasicInfo] = useState([{ key: '', value: '' }])
   let basicInfoEl
   useEffect(() => {
     ;(async () => {
-      const { singermid, singerPic } = props.location.state as {
-        singermid: string
-        singerPic: string
+      let mid, singer_pic
+      if (props.location.state) {
+        const { singermid, singerPic } = props.location.state as {
+          singermid: string
+          singerPic: string
+        }
+        sessionStorage.setItem('singermid', singermid)
+        sessionStorage.setItem('singer_pic', singerPic)
+        mid = singermid
+        singer_pic = singerPic
+      } else {
+        mid = sessionStorage.getItem('singermid') || ''
+        singer_pic = sessionStorage.getItem('singer_pic') || ''
       }
-      const singerDesc = await GET_SINGER_DESC(singermid)
+      const singerDesc = await GET_SINGER_DESC(mid)
       const name = singerDesc.result.data.info.desc.split('，')[0]
-      console.log('........', singerDesc)
       setSingerDesc(singerDesc.result.data.info.desc)
-      setSingerPic(singerPic)
+      setSingerPic(singer_pic)
       setSingerName(name.split('（')[0])
       setBasicInfo(singerDesc.result.data.info.basic.item)
     })()
+    return () => {
+      console.log('移除session')
+      sessionStorage.removeItem('singermid')
+      sessionStorage.removeItem('singer_pic')
+    }
   }, [])
   console.log('asssaddfasfds')
   const CN_ARRAY = ['中国', '新加坡', '马来西亚']
@@ -53,7 +68,7 @@ const SingerDetail: React.FC<RouteComponentProps> = props => {
     <div className="singer-detail">
       <div className="singer-detail--header">
         <img
-          src={singerPic}
+          src={singer_pic}
           alt=""
           width="150"
           height="150"
@@ -75,6 +90,13 @@ const SingerDetail: React.FC<RouteComponentProps> = props => {
             </MyButton>
           </div>
         </div>
+      </div>
+      <div className="singer-detail--content">
+        <div>
+          <span>热门歌曲</span>
+          <span>全部 ></span>
+        </div>
+        <SingerSongList></SingerSongList>
       </div>
     </div>
   )
