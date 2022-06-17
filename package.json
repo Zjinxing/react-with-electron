@@ -76,7 +76,7 @@
     "concurrently": "^4.1.2",
     "cross-env": "^6.0.3",
     "customize-cra": "^0.6.1",
-    "electron": "^8.2.5",
+    "electron": "^15.5.5",
     "electron-builder": "^21.2.0",
     "electron-react-devtools": "^0.5.3",
     "eslint-plugin-react": "^7.16.0",
